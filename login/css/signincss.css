@@ -85,3 +85,17 @@ main .main__content .signin__input {
     color: var(--purple-color);
     font-weight: bold;
 }
+
+.signin__btn .submit_btn:disabled {
+    background-color: #ccc; /* Gray background for disabled state */
+    cursor: not-allowed;
+}
+
+.signin__btn .submit_btn {
+    background-color: #007bff; /* Active button color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+

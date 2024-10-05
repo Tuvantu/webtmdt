@@ -19,26 +19,20 @@ main .main__content {
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-main .main__content .fogot__header {
+main .main__content .login__header {
     height: 80px;
 }
-main .main__content .fogot__title {
+main .main__content .login__title {
     padding-left: 20px;
 }
-.fogot__text {
-    margin-top: 10px;
-}
-.fogot__text p {
-    padding-left: 20px;
-    color: gray;
-}
-main .main__content .fogot__input {
+main .main__content .login__input {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    
 }
-.fogot__input input {
+.login__input input {
     width: 90%;
     height: 45px;
     background-color: #FAFAFA;
@@ -48,7 +42,15 @@ main .main__content .fogot__input {
     padding-left: 10px;
 }
 
-.main__content .fogot__btn {
+.main__content .login__fogotpw {
+    margin-top: 15px;
+    padding-left: 20px;
+}
+.main__content .login__fogotpw a {
+    text-decoration: none;
+    color: var(--purple-color);
+}
+.main__content .login_btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,7 +58,7 @@ main .main__content .fogot__input {
     text-decoration: none;
 }
 
-.fogot__btn button {
+.submit_btn {
     width: 90%;
     height: 45px;
     margin-top: 20px;
@@ -68,16 +70,18 @@ main .main__content .fogot__input {
     font-weight: bold;
 }
 
-.fogot__exit {
-    margin-top: 15px;
+.main__content .login__text {
+    display: flex;
     justify-content: center;
     align-items: center;
-    display: flex;
 }
-.fogot__exit a {
+.main__content .login__text p {
+    margin-top: 20px;
+}
+.main__content .login__text a {
     text-decoration: none;
     color: var(--purple-color);
+    font-weight: bold;
 }
-
 
 

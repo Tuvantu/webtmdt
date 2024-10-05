@@ -42,7 +42,7 @@ main .main__content .signin__input {
     padding-left: 10px;
 }
 
-.main__content .signin__btn {
+.main__content .signin_btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,7 +50,7 @@ main .main__content .signin__input {
     text-decoration: none;
 }
 
-.signin__btn button {
+.__btn button {
     width: 90%;
     height: 45px;
     margin-top: 20px;
@@ -86,16 +86,21 @@ main .main__content .signin__input {
     font-weight: bold;
 }
 
-.signin__btn .submit_btn:disabled {
+.submit_btn:disabled {
     background-color: #ccc; /* Gray background for disabled state */
     cursor: not-allowed;
 }
 
-.signin__btn .submit_btn {
-    background-color: #007bff; /* Active button color */
+.submit_btn {
+    background-color: #66FF33; /* Active button color */
     color: white;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
+    width: 90%;
+    height: 45px;
+    margin-top: 20px;
+    font-weight: 15px;
+    border-radius: 10px;
 }
 

@@ -1,10 +1,28 @@
 <?php
-    include 'config.php';
+    include '../config.php';
     
     if (isset($_POST['submit'])) 
     {
-        $user_name = mysqli_real_escape_string($conn, $_POST['name']);
+        $user_name = mysqli_real_escape_string( $conn, $_POST['user_name']);
+        $phone_number = mysqli_real_escape_string( $conn, $_POST['phone_number']);
+        $password = mysqli_real_escape_string( $conn, md5($_POST['password']) );
+        $create_time = date('Y-m-d H:i:s');
+        
+        $select_user = mysqli_query($conn, "select * from users where phone_number = $phone_number") or die ('query fail');
+
+        if (mysqli_num_rows($select_user) > 0 ) {
+            echo "<script type='text/javascript'>
+                window.alert('số điện thoại đã tồn tại');
+                </script>";
+        } else {
+            mysqli_query($conn, "insert into users (user_name, password, phone_number, role_id, create_time) values ('$user_name', '$password', '$phone_number', '3', '$create_time')")  or die ('query fail');
+            echo "<script type='text/javascript'>
+                window.alert('Đăng ký thành công');
+                </script>";
+        }
     }
+
+
 ?>
 
 
@@ -35,7 +53,7 @@
             <div class="signin__input">
                 <input name="user_name" type="text" placeholder="Họ và tên">
                 <input name="phone_number" type="text" placeholder="Số diện thoại">
-                <input name="password" type="text" placeholder="Mật khẩu">
+                <input name="password" type="password" placeholder="Mật khẩu">
             </div>
 
             <div class="signin__policy">

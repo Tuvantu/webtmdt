@@ -1,3 +1,40 @@
+<?php
+    include '../config.php';
+
+    if (isset($_POST['submit']))
+    {
+        $phone_number = mysqli_real_escape_string( $conn, $_POST['phone_number']);
+        $new_password = mysqli_real_escape_string( $conn, md5($_POST['new_password']));
+
+        $check_phonenumber = mysqli_query($conn, "select * from users where phone_number = $phone_number") or die ('query fail');
+       
+        if (mysqli_num_rows($check_phonenumber) > 0) {
+            $result = mysqli_fetch_assoc($check_phonenumber);
+            $user_id = $result['user_id'];
+            $phone_number_ori = $result['phone_number'];
+
+            if ($phone_number == $phone_number_ori) {
+                mysqli_query($conn, "update users set password = '$new_password' where user_id ='$user_id'")or die ('query fail') ;
+                echo "<script type='text/javascript'>
+                window.alert('Cập nhật mật khẩu thành công');
+                </script>";
+            } else {
+                echo "<script type='text/javascript'>
+                window.alert('Số điện thoại không tồn tại trên hệ thống, vui lòng nhập lại.');
+                </script>";  
+            }
+        } else {
+                echo "<script type='text/javascript'>
+                window.alert('Không tìm thấy người dùng');
+                </script>"; 
+        }
+    }
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +48,7 @@
 
 <body>
     <main>
-        <div class="main__content">
+        <form method="POST" class="main__content">
             <div class="fogot__header">
 
             </div>
@@ -24,18 +61,20 @@
             </div>
 
             <div class="fogot__input">
-                <input type="text" placeholder="Số điện thoại">
+                <input name="phone_number" type="text" placeholder="Số điện thoại">
             </div>
 
-            <a href="" class="fogot__btn">
-                <button type="button">TIẾP TỤC</button>
-            </a>
+            <div class="fogot__input">
+                <input name="new_password" type="password" placeholder="Nhập mật khẩu mơi">
+            </div>
+
+                <input type="submit" name="submit" value="Đổi mật khẩu">
 
             <div class="fogot__exit">
                 <a href="./login.php">Quay về trang Đăng nhập.</a>
             </div>
 
-        </div>
+        </form>
     </main>
 </body>
 

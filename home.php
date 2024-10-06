@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TuLam</title>
+    <title>C2C</title>
 
     <!-- Fontawesome css -->
     <link rel="stylesheet" href="./icon/fontawesome-free-6.6.0-web/css/all.min.css">

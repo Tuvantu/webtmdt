@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
         if ($result['role_id'] == 1) {
             $_SESSION['admin_name'] = $result['user_name'];
             $_SESSION['admin_id'] = $result['user_id'];
-            header('location:../adminpage.php');
+            header('location:../admin/index.php');
         } elseif ($result['role_id'] == 2) {
             $_SESSION['employee_name'] = $result['user_name'];
             $_SESSION['employee_id'] = $result['user_id'];

@@ -1,6 +1,22 @@
 <?php
 include '../config.php';
 session_start();
+
+if (isset($_GET['delete'])) {
+    $delete_id = $_GET['delete'];
+    $delete_query = "DELETE FROM `products` WHERE product_id = '$delete_id'";
+
+    if (mysqli_query($conn, $delete_query)) {
+        echo "<script type='text/javascript'>
+            window.alert('Xóa sản phẩm thành công!');
+            </script>";
+    } else {
+        die('Query failed: ' . mysqli_error($conn));
+    }
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -159,7 +175,6 @@ session_start();
                                             <th>Tên sản phẩm</th>
                                             <th>Giá</th>
                                             <th>Số lượng</th>
-                                            <th>Mô tả</th>
                                             <th>Ngày đăng</th>
                                             <th>Chi tiết</th>
                                             <th>Hành động</th>
@@ -167,19 +182,30 @@ session_start();
                                     </thead>
                                     <tbody>
 
+                                        <?php
+                                        $select_product = mysqli_query($conn, "select * from products") or die('query fail');
+                                        $stt = 1;
+                                        if (mysqli_num_rows($select_product) > 0) {
+                                            while ($fetch_product = mysqli_fetch_assoc($select_product)) {
+                                                ?>
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>Điện thoại</td>
-                                                    <td>5.000.000đ</td>
-                                                    <td>1</td>
-                                                    <td>Màu đen</td>
-                                                    <td>06/10/2024</td>
-                                                    <td><a href="#">Xem chi tiết</a></td>
-                                                    <td><a href="#">Xóa sản phẩm</a></td>
-
+                                                    <td><?php echo $stt ?></td>
+                                                    <td><?php echo $fetch_product['product_name']?></td>
+                                                    <td><?php echo $fetch_product['price']?></td>
+                                                    <td><?php echo $fetch_product['quantity']?></td>
+                                                    <td><?php echo $fetch_product['create_time']?></td>
+                                                    <td><a href="detailproduct.php">Xem chi tiết</a></td>
+                                                    <td>
+                                                    <a href="productmanagement.php?delete=<?php echo $fetch_product['product_id'] ?> "
+                                                    onclick="return confirm('Bạn muốn xóa sản phẩm này?')">Xóa sản phẩm</a>
+                                                    </td>
                                                 </tr>
 
-                                                
+                                                <?php
+                                                $stt++;
+                                            }
+                                        }
+                                        ?>
 
                                     </tbody>
                                 </table>

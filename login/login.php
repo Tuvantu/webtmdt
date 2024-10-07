@@ -18,11 +18,11 @@ if (isset($_POST['submit'])) {
         } elseif ($result['role_id'] == 2) {
             $_SESSION['employee_name'] = $result['user_name'];
             $_SESSION['employee_id'] = $result['user_id'];
-            header('location:../employee.php');
+            header('location:../admin/indexemployee.php');
         } else {
             $_SESSION['user_name'] = $result['user_name'];
             $_SESSION['user_id'] = $result['user_id'];
-            header('location:../user.php');
+            header('location:../index.php');
         }
     }
 }

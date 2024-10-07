@@ -14,7 +14,7 @@ session_start();
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin - Trang chủ</title>
+    <title>Nhân viên - Trang chủ</title>
 
     <!-- ICON -->
 
@@ -47,26 +47,36 @@ session_start();
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item active">
-                <a class="nav-link" href="index.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                <a class="nav-link" href="indexemployee.php">
+                    <i class="fas fa-fw fa-bars"></i>
                     <span>Bảng điều khiển</span></a>
             </li>
 
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Quản lý tài khoản</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="accountuser.php">Tất cả tài khoản</a>
-                        <a class="collapse-item" href="accountemployee.php">Nhân viên</a>
-                    </div>
-                </div>
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-check"></i>
+                    <span>Duyệt sản phẩm</span></a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-shop"></i>
+                    <span>Quản lý sản phẩm</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="category.php">
+                    <i class="fas fa-fw fa-clipboard"></i>
+                    <span>Quản lý danh mục</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-bell"></i>
+                    <span>Gửi thông báo</span></a>
+            </li>
+
 
 
             <hr class="sidebar-divider d-none d-md-block">
@@ -90,7 +100,7 @@ session_start();
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Nhân viên</span>
                                 <div class="sidebar-brand-icon">
                                     <i class="fas fa-circle-user"></i>
                                 </div>

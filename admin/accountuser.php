@@ -1,3 +1,32 @@
+<?php
+include('../config.php');
+session_start();
+
+if (isset($GET['delete'])) {
+    $user_id = $GET['delete'];
+    mysqli_query($conn, "delete from users where user_id = '$user_id'") or die('query_fail');
+    echo "<script type='text/javascript'>
+        window.alert('Xóa tài khoản thành công.');
+        </script>";
+}
+
+if (isset($_GET['delete'])) {
+    $delete_id = $_GET['delete'];
+    try {
+        mysqli_query($conn, "DELETE * FROM `users` WHERE user_id = '$delete_id'") or die('query failed');
+        echo "<script type='text/javascript'>
+            window.alert('Xóa tài khoản thành công.');
+            </script>";
+    } catch (mysqli_sql_exception $e) {
+        echo "<script type='text/javascript'>
+            window.alert('Không thể xóa tài khoản này.');
+            </script>";
+    }
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,45 +53,54 @@
 
     <!-- Custom fonts for this template -->
     <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <style>
+        #dataTable_filter {
+            display: none !important;
+        }
+
+        #dataTable_length {
+            display: none;
+        }
+
+        #dataTable_info {
+            display: none;
+        }
+
+        .pagination {
+            display: none;
+        }
+    </style>
 
 </head>
 
+
 <body id="page-top">
 
-    <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #8DA47E">
 
-            <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
 
                 <div class="sidebar-brand-text mx-3">C2C</div>
             </a>
 
-            <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
-            <!-- Nav Item - Dashboard -->
             <li class="nav-item">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Bảng điều khiển</span></a>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
@@ -77,30 +115,23 @@
                 </div>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
         </ul>
-        <!-- End of Sidebar -->
 
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
             <div id="content">
 
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-                    <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - User Information -->
+                    <!-- Thông tin tài khoản -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -109,7 +140,6 @@
                                     <i class="fas fa-circle-user"></i>
                                 </div>
                             </a>
-                            <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
@@ -128,15 +158,12 @@
                     </ul>
 
                 </nav>
-                <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <h1 class="h3 mb-2 text-gray-800">Tài khoản người dùng</h1>
-                    
 
-                    <!-- Danh sách các tài khoản người dùng -->
+
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Danh sách tài khoản người dùng</h6>
@@ -149,6 +176,7 @@
                                             <th>STT</th>
                                             <th>Họ và tên</th>
                                             <th>Số điện thoại</th>
+                                            <th>Email</th>
                                             <th>Địa chỉ</th>
                                             <th>Ngày tạo</th>
                                             <th>Vai trò</th>
@@ -156,34 +184,37 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Từ Văn Tú</td>
-                                            <td>0327348580</td>
-                                            <td>Bến Tre</td>
-                                            <td>05/10/2024</td>
-                                            <td>Thành viên</td>
-                                            <td>Xóa tài khoản</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Từ Văn Tú</td>
-                                            <td>0327348580</td>
-                                            <td>Bến Tre</td>
-                                            <td>05/10/2024</td>
-                                            <td>Nhân viên</td>
-                                            <td>Xóa tài khoản</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Từ Văn Tú</td>
-                                            <td>0327348580</td>
-                                            <td>Bến Tre</td>
-                                            <td>05/10/2024</td>
-                                            <td>Nhân viên</td>
-                                            <td>Xóa tài khoản</td>
-                                        </tr>
+                                        <?php
+                                        $select_account = mysqli_query($conn, "select * from users where role_id != 1") or die('query fail');
 
+                                        if (mysqli_num_rows($select_account) > 0) {
+                                            while ($fetch_account = mysqli_fetch_assoc($select_account)) {
+                                                $role_id = $fetch_account['role_id'];
+                                                $select_role = mysqli_query($conn, "select * from roles where role_id = $role_id") or die('query fail');
+                                                $role_name = mysqli_fetch_assoc($select_role);
+
+                                                ?>
+
+                                                <tr>
+
+                                                    <td><?php echo $fetch_account['user_id'] ?></td>
+                                                    <td><?php echo $fetch_account['user_name'] ?></td>
+                                                    <td><?php echo $fetch_account['phone_number'] ?></td>
+                                                    <td><?php echo $fetch_account['email'] ?></td>
+                                                    <td><?php echo $fetch_account['address'] ?></td>
+                                                    <td><?php echo $fetch_account['create_time'] ?></td>
+                                                    <td><?php echo $role_name['role_name'] ?></td>
+                                                    <td>
+                                                        <a href="accountuser.php?delete=<?php echo $fetch_account['user_id'] ?> "
+                                                            onclick="return confirm('Bạn muốn xóa tài khoản này?')">Xóa</a>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                            }
+                                        } else {
+                                            echo '<tr><td colspan="7" class="text-center" style="font-size: 25px;">Không có tài khoản nào được thêm!</td></tr>';
+                                        }
+                                        ?>
 
                                     </tbody>
                                 </table>
@@ -192,10 +223,8 @@
                     </div>
 
                 </div>
-                <!-- /.container-fluid -->
 
             </div>
-            <!-- End of Main Content -->
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
@@ -205,17 +234,14 @@
                     </div>
                 </div>
             </footer>
-            <!-- End of Footer -->
 
         </div>
-        <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Page Wrapper -->
 
 
 
-    <!-- Logout Modal-->
+    <!-- Modal đăng xuất-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -229,27 +255,22 @@
                 <div class="modal-body">Phiên làm việc của bạn sẽ kết thúc nếu nhấn vào "Đăng xuất".</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
-                    <a class="btn btn-primary" href="login.html">Đăng xuất</a>
+                    <a class="btn btn-primary" href="../login/login.php">Đăng xuất</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
 </body>

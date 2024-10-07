@@ -1,7 +1,35 @@
 <?php
 include '../config.php';
 session_start();
+
+$employee_id = $_SESSION['employee_id'];
+
+if (!isset($employee_id)) {
+    header('location:../login/login.php');
+}
+
+if (isset($_POST['add_category'])) {
+    $category_name = mysqli_real_escape_string($conn, $_POST['category_name']);
+    $description = mysqli_real_escape_string($conn, $_POST['description']);
+
+    $select_category = mysqli_query($conn, "select * from categories where category_name = '$category_name'") or die('query fail');
+
+    if (mysqli_num_rows($select_category) > 0) {
+        echo "<script type='text/javascript'>
+            window.alert('Danh mục sản phẩm đã tồn tại');
+            </script>";
+    } else {
+        mysqli_query($conn, "insert into categories (category_name, description) values ('$category_name', '$description')") or die('query fail');
+        echo "<script type='text/javascript'>
+                    window.alert('Thêm danh mục sản phẩm thành công');
+                    </script>";
+    }
+
+}
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +42,7 @@ session_start();
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin - Trang chủ</title>
+    <title>Nhân viên - Quản lý danh mục</title>
 
     <!-- ICON -->
 
@@ -27,8 +55,7 @@ session_start();
     <link rel="stylesheet" href="../icon/fontawesome-free-6.6.0-web/js/brands.min.js">
     <link rel="stylesheet" href="../icon/fontawesome-free-6.6.0-web/js/fontawesome.min.js">
 
-    <link
-        rel="stylesheet">
+    <link rel="stylesheet">
 
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -47,26 +74,36 @@ session_start();
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item active">
-                <a class="nav-link" href="index.php">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                <a class="nav-link" href="indexemployee.php">
+                    <i class="fas fa-fw fa-bars"></i>
                     <span>Bảng điều khiển</span></a>
             </li>
 
             <hr class="sidebar-divider">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Quản lý tài khoản</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="accountuser.php">Tất cả tài khoản</a>
-                        <a class="collapse-item" href="accountemployee.php">Nhân viên</a>
-                    </div>
-                </div>
+                <a class="nav-link" href="browseproduct.php">
+                    <i class="fas fa-fw fa-check"></i>
+                    <span>Duyệt sản phẩm</span></a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="productmanagement.php">
+                    <i class="fas fa-fw fa-shop"></i>
+                    <span>Quản lý sản phẩm</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="category.php">
+                    <i class="fas fa-fw fa-clipboard"></i>
+                    <span>Quản lý danh mục</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="notification.php">
+                    <i class="fas fa-fw fa-bell"></i>
+                    <span>Gửi thông báo</span></a>
+            </li>
+
 
 
             <hr class="sidebar-divider d-none d-md-block">
@@ -90,7 +127,7 @@ session_start();
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Nhân viên</span>
                                 <div class="sidebar-brand-icon">
                                     <i class="fas fa-circle-user"></i>
                                 </div>
@@ -113,71 +150,32 @@ session_start();
                     </ul>
 
                 </nav>
-
                 <div class="container-fluid">
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Bảng điều khiển</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Thêm danh mục sản phẩm</h1>
                     </div>
 
                     <div class="row">
 
-                        <?php
-
-                        $select_accounts = mysqli_query($conn, "select * from users where role_id != 1") or die('query fail');
-                        $total_account = mysqli_num_rows($select_accounts);
-
-                        ?>
-
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Tài khoản người dùng</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php echo $total_account ?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-users fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
+                        <div class="container mt-1">
+                            <form method="post">
+                                <div class="form-group">
+                                    <label>Tên danh mục</label>
+                                    <input type="text" class="form-control" name="category_name" required>
                                 </div>
-                            </div>
-                        </div>
-
-
-                        <?php
-
-                        $select_accemployee = mysqli_query($conn, "select * from users where role_id = 2") or die('query fail');
-                        $total_account_employee = mysqli_num_rows($select_accemployee);
-
-                        ?>
-
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Nhân viên quản lý</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $total_account_employee ?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-user fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
+                                <div class="form-group">
+                                    <label>Mô tả</label>
+                                    <input type="text" class="form-control" name="description" required>
                                 </div>
-                            </div>
+
+                                <input name="add_category" type="submit" class="btn btn-primary" value="Thêm danh mục">
+                            </form>
                         </div>
 
                     </div>
 
-
-
                 </div>
-
             </div>
 
             <!-- Footer -->

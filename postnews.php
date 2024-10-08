@@ -23,9 +23,9 @@ if (isset($_POST['submit'])) {
     product_name,  price, description, quantity, time_used, create_time, purchase_time, product_image, warranty_period,
     place_of_purchase, purchase_price, user_id, category_id) values ('$product_name', '$price', '$description',
     '$quantity', '$time_used', '$create_time', '$purchase_time', '$image', '$warranty_period', '$place_of_purchase',
-    '$purchase_price', '$user_id', '$category_id')") or die ('query fail');
+    '$purchase_price', '$user_id', '$category_id')") or die('query fail');
 
-    if($add_product) {
+    if ($add_product) {
         move_uploaded_file($image_tmp_name, $image_folder);
         echo "<script type='text/javascript'>
                 window.alert('Đăng sản phẩm thành công, vui lòng chờ nhân viên duyệt sản phẩm của bạn.');
@@ -168,11 +168,16 @@ if (isset($_POST['submit'])) {
                     <i class="arrow-icon">▼</i>
                 </div>
                 <div class="section-content">
-                    <input name="time_used" type="text" placeholder="Bạn đã sử dụng sản phẩm này bao lâu?" required>
-                    <input name="purchase_time" type="text" placeholder="Bạn mua sản phẩm này khi nào?">
-                    <input name="place_of_purchase" type="text" placeholder="Bạn mua sản phẩm này ở đâu?">
-                    <input name="purchase_price" type="text" placeholder="Giá khi mua của sản phẩm này?">
-                    <input name="warranty_period" type="text" placeholder="Hạn sử dụng của sản phẩm?">
+                    <label for="time_used">Bạn đã sử dụng sản phẩm này bao lâu?</label>
+                    <input name="time_used" type="text" placeholder="Bao nhiêu ngày (tuần, tháng, năm,...)" required>
+                    <label for="purchase_time">Bạn mua sản phẩm này khi nào?</label>
+                    <input name="purchase_time" type="date">
+                    <label for="time_used">Bạn mua sản phẩm này ở đâu?</label>
+                    <input name="place_of_purchase" type="text" placeholder="Nhập địa chỉ.">
+                    <label for="time_used">Giá khi mua của sản phẩm này?</label>
+                    <input name="purchase_price" type="text" placeholder="Nhập giá khi mua.">
+                    <label for="time_used">Hạn sử dụng của sản phẩm? (Nếu có)</label>
+                    <input name="warranty_period" type="date">
                 </div>
             </div>
 

@@ -150,106 +150,128 @@ session_start();
 
     <div class="container">
         <div class="grid wide">
-            <div class="row sm-gutter grid-content">
-                <div class="column l-2 me-0 s-0">
-                    <nav class="category">
-                        <h3 class="category-heading">
-                            <i class="category-heading-icon fas fa-bars"></i>
-                            Danh mục
-                        </h3>
-                        <ul class="category-list">
-                        <?php
-                        $select_category = mysqli_query($conn, "select * from categories") or die('query fail');
-                        if (mysqli_num_rows($select_category) > 0) {
-                            while ($fetch_category = mysqli_fetch_assoc($select_category)) {
-                                ?>
-                            <li class="navbar-category-item category-item2">
-                                <?php echo $fetch_category['category_name'] ?>
-                            </li>
-                            <?php
-                            }
-                        }
-                        ?>
-                        </ul>
-                        <ul class="navbar-category-list">
-                            <li class="navbar-category-item">
-
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="column l-10 me-12 s-12">
-                    <div class="home-filter">
-                        <span class="label" style="margin-right: 16px;">Sắp xếp theo</span>
-                        <button class="home-filter-btn btn">Phổ biến</button>
-                        <button class="home-filter-btn btn btn--active">Mới nhất</button>
-                        <button class="home-filter-btn btn">Bán chạy</button>
-                        <div class="select-price">
-                            <span class="select-label">Giá</span>
-                            <i class="fas fa-angle-down"></i>
-                            <ul class="select-price-list">
-                                <li class="select-price-item">
-                                    <a href="" class="select-price-link">Giá từ thấp đến cao</a>
-                                </li>
-                                <li class="select-price-item">
-                                    <a href="" class="select-price-link">Giá từ cao đến thấp</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="page">
-                            <div class="page-num">
-                                <span class="page-current">1</span>/14
-                            </div>
-                            <div class="page-control">
-                                <a href="" class="page-control-btn">
-                                    <i class="page-control-icon fas fa-angle-left"></i>
-                                </a>
-                                <a href="" class="page-control-btn">
-                                    <i class="page-control-icon fas fa-angle-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BÊN DƯỚI LÀ sản phẩm -->
-
-                    <?php
-
-                    $select_product = mysqli_query($conn, "select * from ")
-
+        <div class="row sm-gutter grid-content">
+    <div class="column l-2 me-0 s-0">
+        <nav class="category">
+            <h3 class="category-heading">
+                <i class="category-heading-icon fas fa-bars"></i>
+                Danh mục
+            </h3>
+            <ul class="category-list">
+            <?php
+            $select_category = mysqli_query($conn, "SELECT * FROM categories") or die('Query failed');
+            if (mysqli_num_rows($select_category) > 0) {
+                while ($fetch_category = mysqli_fetch_assoc($select_category)) {
                     ?>
-
-                    <div class="home-product">
-                        <div class="row sm-gutter">
-                        <div class="column l-2-4 me-4 s-6" >
-							<a class="home-product-item" href="product.php">
-								<div class="home-product-item__img" style="background-image: url(./img/sp1.webp)">
-								</div>
-								<h4 class="home-product-item__name">Điện thoại Nokia Điện thoại Nokia Điện thoại Nokia</h4>
-								<div class="home-product-item__price">
-									<div class="home-product-item__priceproduct">6.000.000đ</div>
-								</div>
-								<div class="home-product-item__timeupload">
-									
-									
-									<span class="home-product-item__time">
-                                    <i class="fa-solid fa-clock" style="color: #a9aaad;"></i> 08/10/2024
-                                    </span>
-								</div>
-	
-							</a>
-						</div>
-                        </div>
-                    </div>
-                    <!-- BÊN trên LÀ sản phẩm -->
-
+                    <li class="navbar-category-item category-item2">
+                        <a href="?category_id=<?php echo $fetch_category['category_id']; ?>"><?php echo $fetch_category['category_name']; ?></a>
+                    </li>
+                    <?php
+                }
+            }
+            ?>
+            </ul>
+        </nav>
+    </div>
+    <div class="column l-10 me-12 s-12">
+        <div class="home-filter">
+            <span class="label" style="margin-right: 16px;">Sắp xếp theo</span>
+            <form method="GET" action="">
+                <div>
+                    <select name="sort_by" onchange="this.form.submit()">
+                        <option value="new">Mới nhất</option>
+                        <option value="price_asc" <?php echo (isset($_GET['sort_by']) && $_GET['sort_by'] == 'price_asc') ? 'selected' : ''; ?>>Giá từ thấp đến cao</option>
+                        <option value="price_desc" <?php echo (isset($_GET['sort_by']) && $_GET['sort_by'] == 'price_desc') ? 'selected' : ''; ?>>Giá từ cao đến thấp</option>
+                    </select>
+                </div>
+            </form>
+            <div class="page">
+                <div class="page-num">
+                    <span class="page-current">1</span>/14
+                </div>
+                <div class="page-control">
+                    <a href="" class="page-control-btn">
+                        <i class="page-control-icon fas fa-angle-left"></i>
+                    </a>
+                    <a href="" class="page-control-btn">
+                        <i class="page-control-icon fas fa-angle-right"></i>
+                    </a>
                 </div>
             </div>
+        </div>
 
+        <!-- BÊN DƯỚI LÀ sản phẩm -->
+
+        <?php
+        // Lấy category_id từ URL nếu có
+        $category_id = isset($_GET['category_id']) ? $_GET['category_id'] : '';
+
+        // Xác định thứ tự sắp xếp
+        $order_by = "p.create_time DESC"; // Mặc định sắp xếp theo mới nhất
+        if (isset($_GET['sort_by'])) {
+            switch ($_GET['sort_by']) {
+                case 'new':
+                    $order_by = "p.create_time DESC"; // Mặc định sắp xếp theo mới nhất
+                    break;
+                case 'price_asc':
+                    $order_by = "p.price ASC"; // Sắp xếp giá từ thấp đến cao
+                    break;
+                case 'price_desc':
+                    $order_by = "p.price DESC"; // Sắp xếp giá từ cao đến thấp
+                    break;
+            }
+        }
+
+        // Truy vấn tất cả các sản phẩm từ productapproval có status là 'Accept'
+        $query = "SELECT p.* FROM productapproval pa
+                  JOIN products p ON pa.product_id = p.product_id
+                  WHERE pa.status = 'Accept'";
+
+        // Nếu có lọc theo danh mục, thêm điều kiện vào truy vấn
+        if (!empty($category_id)) {
+            $query .= " AND p.category_id = '$category_id'";
+        }
+
+        // Thêm điều kiện sắp xếp
+        $query .= " ORDER BY $order_by";
+
+        $select_all_product = mysqli_query($conn, $query) or die('Query Failed');
+
+        if (mysqli_num_rows($select_all_product) > 0) {
+            while ($product = mysqli_fetch_assoc($select_all_product)) {
+                // Hiển thị thông tin sản phẩm
+                ?>
+                <div class="home-product">
+                    <div class="row sm-gutter">
+                        <div class="column l-2-4 me-4 s-6">
+                            <a class="home-product-item" href="product.php?id=<?php echo $product['product_id']; ?>">
+                                <div class="home-product-item__img" style="background-image: url('./upload_image/<?php echo $product['product_image']; ?>')">
+                                </div>
+                                <h4 class="home-product-item__name"><?php echo $product['product_name']; ?></h4>
+                                <div class="home-product-item__price">
+                                    <div class="home-product-item__priceproduct"><?php echo number_format($product['price'], 0, ',', '.'); ?>đ</div>
+                                </div>
+                                <div class="home-product-item__timeupload">
+                                    <span class="home-product-item__time">
+                                        <i class="fa-solid fa-clock" style="color: #a9aaad;"></i> <?php echo $product['create_time']; ?>
+                                    </span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+        } else {
+            echo "<p>Không có sản phẩm nào được phê duyệt!</p>";
+        }
+        ?>
+        <!-- BÊN trên LÀ sản phẩm -->
+
+    </div>
+</div>
 
         </div>
-    </div>
-    </div>
     </div>
 
     <div class="footer">

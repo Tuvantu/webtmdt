@@ -1,6 +1,13 @@
 <?php
 include './config.php';
 
+	if (isset($_GET['id'])) {
+		$product_id = $_GET['id'];
+		$sql = "SELECT * FROM products WHERE product_id = $product_id";
+		$result = mysqli_query($conn, $sql);
+		$fetch_product = mysqli_fetch_assoc($result);
+	}
+
 ?>
 <html>
 <head>
@@ -49,58 +56,48 @@ include './config.php';
 				<div class="prodoct-detail-info">
 					<div class="grid__column-left">
 						<div class="product-detail-item-img">
-							<div class="product-detail-item-img-general product-detail-item-img-1" id="img-1" style="background-image: url(../'.$row['hinhanh'].' );"></div>
+							<div class="product-detail-item-img-general product-detail-item-img-1" id="img-1" style="background-image: url('./upload_image/<?php echo $fetch_product['product_image']; ?>');"></div>
 						</div>
 					</div>
 					<div class="grid__column-right">
 						<div class="product-detail-title">
                             
-							<span class="product-detail-label">Điện thoại oppo</span>
+							<span class="product-detail-label">
+								<?php echo $fetch_product['product_name'] ?>
+							</span>
 						</div>
 						<div class="product-detail-appreciate">
 							<div class="product-detail-appreciate__space product-detail-appreciate__rating">
-								<span style="text-decoration: underline;">4.9</span>
+								<span style="text-decoration: underline;">Làm sau</span>
 								<i class="home-product-item__star-gold fas fa-star"></i>
 								<i class="home-product-item__star-gold fas fa-star"></i>
 								<i class="home-product-item__star-gold fas fa-star"></i>
 								<i class="home-product-item__star-gold fas fa-star"></i>
 								<i class="home-product-item__star-gold fas fa-star"></i>
 							</div>
-							<div class="product-detail-appreciate__space product-detail-appreciate__appre">
+							<div style="border-right: none;" class="product-detail-appreciate__space product-detail-appreciate__appre">
 								<span>1k</span>
-								<div class="product-detail-label-lb">Đánh giá</div>
+								<div class="product-detail-label-lb">Đánh giá ( làm sau )</div>
 							</div>
-							<div class="product-detail-appreciate__space product-detail-appreciate__sold">
+							<!-- <div class="product-detail-appreciate__space product-detail-appreciate__sold">
 								<span>2,6k</span>
 								<div class="product-detail-label-lb">Đã bán</div>
-							</div>
+							</div> -->
 						</div>
 
 						<div class="product-detail-price">
-							<span class="product-detail-price__present">5.000.000đ</span>
+							<span class="product-detail-price__present">
+								<?php echo number_format($fetch_product['price'], 0, ',', '.'); ?> đ
+							</span>
 						</div>
 
 						<div class="product-detail-ship">
 							<label class="product-detail-label-lb" style="width: 110px;">Vận chuyển</label>
 							<div class="product-detail-ship-content">
 								<div class="product-detail-ship-content-free">
-									<img src="../img/freeship.png" height="15" width="25">
+									<img src="./img/free_shipping.png" height="30" width="30">
 									<span style="margin-left: 5px;">Miễn phí vận chuyển</span>
 								</div>
-							</div>
-						</div>
-
-						<div class="product-detail-color">
-							<div class="product-detail-label-lb product-detail-label-lb-width">Màu sắc</div>
-							<div class="product-detail-color-color">
-								<input label="" type="radio" name="color" value="" checked>
-							</div>
-						</div>
-
-						<div class="product-detail-size">
-							<div class="product-detail-label-lb product-detail-label-lb-width">Size</div>
-							<div class="product-detail-size-size">
-								<input label="" type="radio" name="size" value="" checked>
 							</div>
 						</div>
 
@@ -111,7 +108,6 @@ include './config.php';
 								<input type="text" value="1" id="quantity-input" class="product-detail-quantity-input">
 								<input type="button" value="+" id="btn-add" class="product-detail-quantity-btn product-detail-quantity-btn-right" >
 							</div>
-							<div class="product-detail-label-lb"> sản phẩm có sẵn</div>
 						</div>
 
 						<div class="product-detail-shopping">
@@ -238,11 +234,7 @@ include './config.php';
 
 			</div>
 			</div>
-			<div id="binhluan" >
-            <input type="hidden" name="idsp" id="idsp" value="<?php echo $row['id']; ?>">
-            <input type="text" name="noidung" id="noidung" placeholder="Nhập bình luận">
-            <input type="submit" value="Bình luận" id="Guibl">
-			</div>
+
 				</div>
 				</div>
 				</div>    

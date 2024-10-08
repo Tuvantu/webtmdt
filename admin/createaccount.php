@@ -18,7 +18,7 @@ if (isset($_POST['add_account'])) {
 
     $select_user = mysqli_query($conn, "select * from users where phone_number = $phone_number") or die('query fail');
 
-    if(mysqli_num_rows($select_user) > 0) {
+    if (mysqli_num_rows($select_user) > 0) {
         echo "<script type='text/javascript'>
                 window.alert('Tài khoản đã tồn tại');
                 </script>";
@@ -60,8 +60,7 @@ if (isset($_POST['add_account'])) {
     <link rel="stylesheet" href="../icon/fontawesome-free-6.6.0-web/js/brands.min.js">
     <link rel="stylesheet" href="../icon/fontawesome-free-6.6.0-web/js/fontawesome.min.js">
 
-    <link
-        rel="stylesheet">
+    <link rel="stylesheet">
 
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -123,7 +122,9 @@ if (isset($_POST['add_account'])) {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    <?php echo $_SESSION['admin_name'] ?>
+                                </span>
                                 <div class="sidebar-brand-icon">
                                     <i class="fas fa-circle-user"></i>
                                 </div>
@@ -218,7 +219,7 @@ if (isset($_POST['add_account'])) {
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
                         <a class="btn btn-primary" href="../login/login.php">Đăng xuất</a>
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>

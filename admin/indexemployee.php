@@ -27,72 +27,28 @@ session_start();
     <link rel="stylesheet" href="../icon/fontawesome-free-6.6.0-web/js/brands.min.js">
     <link rel="stylesheet" href="../icon/fontawesome-free-6.6.0-web/js/fontawesome.min.js">
 
-    <link
-        rel="stylesheet">
+    <link rel="stylesheet">
 
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+    <style>
+        .navbar {
+            margin-top: 0px;
+        }
+    </style>
 </head>
 
 <body id="page-top">
 
     <div id="wrapper">
 
-        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #8DA47E">
-
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-text mx-3">C2C</div>
-            </a>
-
-            <hr class="sidebar-divider my-0">
-
-            <li class="nav-item active">
-                <a class="nav-link" href="indexemployee.php">
-                    <i class="fas fa-fw fa-bars"></i>
-                    <span>Bảng điều khiển</span></a>
-            </li>
-
-            <hr class="sidebar-divider">
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-check"></i>
-                    <span>Duyệt sản phẩm</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-shop"></i>
-                    <span>Quản lý sản phẩm</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="category.php">
-                    <i class="fas fa-fw fa-clipboard"></i>
-                    <span>Quản lý danh mục</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-fw fa-bell"></i>
-                    <span>Gửi thông báo</span></a>
-            </li>
-
-
-
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-
-        </ul>
-
+        <?php
+        include 'navigation.php';
+        ?>
         <div id="content-wrapper" class="d-flex flex-column">
 
             <div id="content">
 
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand bg-white topbar mb-4 static-top shadow">
 
                     <ul class="navbar-nav ml-auto">
 
@@ -100,7 +56,9 @@ session_start();
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Nhân viên</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    <?php echo $_SESSION['employee_name'] ?>
+                                </span>
                                 <div class="sidebar-brand-icon">
                                     <i class="fas fa-circle-user"></i>
                                 </div>
@@ -134,8 +92,8 @@ session_start();
 
                         <?php
 
-                        $select_accounts = mysqli_query($conn, "select * from users where role_id != 1") or die('query fail');
-                        $total_account = mysqli_num_rows($select_accounts);
+                        $select_product = mysqli_query($conn, "select * from products") or die('query fail');
+                        $total_product = mysqli_num_rows($select_product);
 
                         ?>
 
@@ -145,9 +103,10 @@ session_start();
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Tài khoản người dùng</div>
+                                                Sản phẩm</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                                <?php echo $total_account ?></div>
+                                                <?php echo $total_product ?>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-users fa-2x text-gray-300"></i>
@@ -160,8 +119,8 @@ session_start();
 
                         <?php
 
-                        $select_accemployee = mysqli_query($conn, "select * from users where role_id = 2") or die('query fail');
-                        $total_account_employee = mysqli_num_rows($select_accemployee);
+                        $select_category = mysqli_query($conn, "select * from categories") or die('query fail');
+                        $total_category = mysqli_num_rows($select_category);
 
                         ?>
 
@@ -171,8 +130,36 @@ session_start();
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Nhân viên quản lý</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $total_account_employee ?></div>
+                                                Danh mục sản phẩm</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php echo $total_category ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-user fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php
+
+                        $select_productapp = mysqli_query($conn, "select * from productapproval") or die('query fail');
+                        $total_productapp = mysqli_num_rows($select_productapp);
+
+                        ?>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Sản phẩm cần duyệt</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                                <?php echo $total_productapp ?>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-user fa-2x text-gray-300"></i>
@@ -183,8 +170,6 @@ session_start();
                         </div>
 
                     </div>
-
-
 
                 </div>
 

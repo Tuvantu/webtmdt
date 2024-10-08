@@ -1,3 +1,8 @@
+<?php
+include '../config.php';
+session_start();
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,68 +31,26 @@
     <link rel="stylesheet">
 
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+    <style>
+        .navbar {
+            margin-top: 0px;
+        }
+    </style>
 </head>
 
 <body id="page-top">
 
     <div id="wrapper">
 
-        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #8DA47E">
-
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-text mx-3">C2C</div>
-            </a>
-
-            <hr class="sidebar-divider my-0">
-
-            <li class="nav-item active">
-                <a class="nav-link" href="indexemployee.php">
-                    <i class="fas fa-fw fa-bars"></i>
-                    <span>Bảng điều khiển</span></a>
-            </li>
-
-            <hr class="sidebar-divider">
-
-            <li class="nav-item">
-                <a class="nav-link" href="browseproduct.php">
-                    <i class="fas fa-fw fa-check"></i>
-                    <span>Duyệt sản phẩm</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="productmanagement.php">
-                    <i class="fas fa-fw fa-shop"></i>
-                    <span>Quản lý sản phẩm</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="category.php">
-                    <i class="fas fa-fw fa-clipboard"></i>
-                    <span>Quản lý danh mục</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="notification.php">
-                    <i class="fas fa-fw fa-bell"></i>
-                    <span>Gửi thông báo</span></a>
-            </li>
-
-
-
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-
-        </ul>
+        <?php
+        include 'navigation.php';
+        ?>
 
         <div id="content-wrapper" class="d-flex flex-column">
 
             <div id="content">
 
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand bg-white topbar mb-4 static-top shadow">
 
                     <ul class="navbar-nav ml-auto">
 
@@ -95,7 +58,9 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Nhân viên</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    <?php echo $_SESSION['employee_name'] ?>
+                                </span>
                                 <div class="sidebar-brand-icon">
                                     <i class="fas fa-circle-user"></i>
                                 </div>
@@ -128,12 +93,12 @@
 
                         <div class="container mt-1">
                             <form method="post">
-                            <div class="form-group">
+                                <div class="form-group">
                                     <label>Người nhận</label>
                                     <select type="select" class="form-control" name="notification_name" required>
                                         <option value="">Tất cả</option>
                                         <option value="">Nguyễn Văn A</option>
-                                        </select>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Tiêu đề thông báo</label>
@@ -141,7 +106,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Nội dung thông báo</label>
-                                    <input type="text" class="form-control"  name="message" required>
+                                    <input type="text" class="form-control" name="message" required>
                                 </div>
 
                                 <input name="add_account" type="submit" class="btn btn-primary" value="Gửi thông báo">

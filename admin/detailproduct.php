@@ -48,6 +48,9 @@ session_start();
             background-color: #bcbcbd;
         }
 
+        .navbar {
+            margin-top: 0px;
+        }
         .card {
             border-radius: 15px;
         }
@@ -77,7 +80,7 @@ session_start();
 
             <div id="content">
 
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand bg-white topbar mb-4 static-top shadow">
 
                     <ul class="navbar-nav ml-auto">
 
@@ -85,7 +88,9 @@ session_start();
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Nhân viên</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    <?php echo $_SESSION['employee_name'] ?>
+                                </span>
                                 <div class="sidebar-brand-icon">
                                     <i class="fas fa-circle-user"></i>
                                 </div>

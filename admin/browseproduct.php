@@ -1,6 +1,32 @@
 <?php
 include '../config.php';
 session_start();
+$user_id = $_SESSION['employee_id'];
+
+if (isset($_GET['browse_id'])) {
+    $product_id = $_GET['browse_id'];
+    $create_time = date('Y-m-d H:i:s');
+
+    mysqli_query($conn, "insert into productapproval (status, create_time, product_id, user_id) values ('Accept', '$create_time', '$product_id', '$user_id')") or die('query fail');
+
+    mysqli_query($conn, "update products set status = 1 where product_id = '$product_id'");
+    echo "<script type='text/javascript'>
+        window.alert('Duyệt sản phẩm thành công.');
+        </script>";
+}
+
+if (isset($_GET['refuse_id'])) {
+    $product_id = $_GET['refuse_id'];
+    $create_time = date('Y-m-d H:i:s');
+    mysqli_query($conn, "insert into productapproval (status, create_time, product_id, user_id) values ('Dismiss', '$create_time', '$product_id', '$user_id')") or die('query fail');
+
+    mysqli_query($conn, "update products set status = 1 where product_id = '$product_id'");
+    echo "<script type='text/javascript'>
+        window.alert('Đã từ chối sản phẩm.');
+        </script>";
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -46,6 +72,10 @@ session_start();
         .btn-createaccount:hover {
             background-color: #bcbcbd;
         }
+
+        .navbar {
+            margin-top: 0px;
+        }
     </style>
 
 </head>
@@ -54,61 +84,15 @@ session_start();
 
     <div id="wrapper">
 
-        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #8DA47E">
-
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-text mx-3">C2C</div>
-            </a>
-
-            <hr class="sidebar-divider my-0">
-
-            <li class="nav-item active">
-                <a class="nav-link" href="indexemployee.php">
-                    <i class="fas fa-fw fa-bars"></i>
-                    <span>Bảng điều khiển</span></a>
-            </li>
-
-            <hr class="sidebar-divider">
-
-            <li class="nav-item">
-                <a class="nav-link" href="browseproduct.php">
-                    <i class="fas fa-fw fa-check"></i>
-                    <span>Duyệt sản phẩm</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="productmanagement.php">
-                    <i class="fas fa-fw fa-shop"></i>
-                    <span>Quản lý sản phẩm</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="category.php">
-                    <i class="fas fa-fw fa-clipboard"></i>
-                    <span>Quản lý danh mục</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="notification.php">
-                    <i class="fas fa-fw fa-bell"></i>
-                    <span>Gửi thông báo</span></a>
-            </li>
-
-
-
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-
-        </ul>
+        <?php
+        include 'navigation.php';
+        ?>
 
         <div id="content-wrapper" class="d-flex flex-column">
 
             <div id="content">
 
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand bg-white topbar mb-4 static-top shadow">
 
                     <ul class="navbar-nav ml-auto">
 
@@ -116,7 +100,9 @@ session_start();
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Nhân viên</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    <?php echo $_SESSION['employee_name'] ?>
+                                </span>
                                 <div class="sidebar-brand-icon">
                                     <i class="fas fa-circle-user"></i>
                                 </div>
@@ -156,36 +142,43 @@ session_start();
                                     <thead>
                                         <tr>
                                             <th>STT</th>
-                                            <th>Người đăng bài</th>
-                                            <th>Địa chỉ</th>
-                                            <th>Hình ảnh</th>
                                             <th>Tên sản phẩm</th>
                                             <th>Giá</th>
                                             <th>Số lượng</th>
-                                            <th>Mô tả</th>
-                                            <th>Duyệt</th>
-                                            <th>Từ chối</th>
+                                            <th>Ngày đăng</th>
+                                            <th>Hành động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        <?php
+                                        $select_product = mysqli_query($conn, "select * from products where status = 0") or die('query fail');
+                                        $stt = 1;
+                                        if (mysqli_num_rows($select_product) > 0) {
+                                            while ($fetch_product = mysqli_fetch_assoc($select_product)) {
+                                                ?>
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>Từ Văn Tú</td>
-                                                    <td>Bến Tre</td>
-                                                    <td>Hình ảnh</td>
-                                                    <td>Điện thoại</td>
-                                                    <td>5.000.000đ</td>
-                                                    <td>1</td>
-                                                    <td>Màu đen</td>
+                                                    <td><?php echo $stt ?></td>
+                                                    <td><?php echo $fetch_product['product_name'] ?></td>
+                                                    <td><?php echo $fetch_product['price'] ?></td>
+                                                    <td><?php echo $fetch_product['quantity'] ?></td>
+                                                    <td><?php echo $fetch_product['create_time'] ?></td>
+                                                    <td>
+                                                        <a href="browseproduct.php?browse_id=<?php echo $fetch_product['product_id'] ?> "
+                                                            onclick="return confirm('Bạn muốn duyệt sản phẩm này?')">Duyệt</a>
 
-                                                    
+                                                        <a href="browseproduct.php?refuse_id=<?php echo $fetch_product['product_id'] ?> "
+                                                            onclick="return confirm('Bạn muốn từ chối sản phẩm này?')">Từ
+                                                            chối</a>
 
-                                                    <td> <a href="#">Phê duyệt</a></td>
-                                                    <td><a href="#">Từ chối</a></td>
+                                                    </td>
                                                 </tr>
 
-                                                
+                                                <?php
+                                                $stt++;
+                                            }
+                                        }
+                                        ?>
+
 
                                     </tbody>
                                 </table>

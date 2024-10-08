@@ -4,7 +4,7 @@ session_start();
 
 if (isset($_GET['delete'])) {
     $delete_id = $_GET['delete'];
-    $delete_query = "DELETE FROM `products` WHERE product_id = '$delete_id'";
+    $delete_query = "DELETE FROM `productapproval` WHERE product_id = '$delete_id'";
 
     if (mysqli_query($conn, $delete_query)) {
         echo "<script type='text/javascript'>
@@ -62,6 +62,10 @@ if (isset($_GET['delete'])) {
         .btn-createaccount:hover {
             background-color: #bcbcbd;
         }
+
+        .navbar {
+            margin-top: 0px;
+        }
     </style>
 
 </head>
@@ -70,61 +74,15 @@ if (isset($_GET['delete'])) {
 
     <div id="wrapper">
 
-        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #8DA47E">
-
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-text mx-3">C2C</div>
-            </a>
-
-            <hr class="sidebar-divider my-0">
-
-            <li class="nav-item active">
-                <a class="nav-link" href="indexemployee.php">
-                    <i class="fas fa-fw fa-bars"></i>
-                    <span>Bảng điều khiển</span></a>
-            </li>
-
-            <hr class="sidebar-divider">
-
-            <li class="nav-item">
-                <a class="nav-link" href="browseproduct.php">
-                    <i class="fas fa-fw fa-check"></i>
-                    <span>Duyệt sản phẩm</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="productmanagement.php">
-                    <i class="fas fa-fw fa-shop"></i>
-                    <span>Quản lý sản phẩm</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="category.php">
-                    <i class="fas fa-fw fa-clipboard"></i>
-                    <span>Quản lý danh mục</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="notification.php">
-                    <i class="fas fa-fw fa-bell"></i>
-                    <span>Gửi thông báo</span></a>
-            </li>
-
-
-
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-
-        </ul>
+        <?php
+        include 'navigation.php'
+        ?>
 
         <div id="content-wrapper" class="d-flex flex-column">
 
             <div id="content">
 
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand bg-white topbar mb-4 static-top shadow">
 
                     <ul class="navbar-nav ml-auto">
 
@@ -183,30 +141,34 @@ if (isset($_GET['delete'])) {
                                     <tbody>
 
                                         <?php
-                                        $select_product = mysqli_query($conn, "select * from products") or die('query fail');
+                                        $select_all_product = mysqli_query($conn, "SELECT p.product_name, p.price, p.quantity, p.create_time, p.product_id 
+                                         FROM productapproval pa JOIN products p ON pa.product_id = p.product_id WHERE pa.status = 'Accept'") or die('Query failed');
+
                                         $stt = 1;
-                                        if (mysqli_num_rows($select_product) > 0) {
-                                            while ($fetch_product = mysqli_fetch_assoc($select_product)) {
+
+                                        if (mysqli_num_rows($select_all_product) > 0) {
+                                            while ($fetch_product = mysqli_fetch_assoc($select_all_product)) {
                                                 ?>
                                                 <tr>
-                                                    <td><?php echo $stt ?></td>
-                                                    <td><?php echo $fetch_product['product_name']?></td>
-                                                    <td><?php echo $fetch_product['price']?></td>
-                                                    <td><?php echo $fetch_product['quantity']?></td>
-                                                    <td><?php echo $fetch_product['create_time']?></td>
-                                                    <td><a href="detailproduct.php">Xem chi tiết</a></td>
+                                                    <td><?php echo $stt; ?></td>
+                                                    <td><?php echo $fetch_product['product_name']; ?></td>
+                                                    <td><?php echo $fetch_product['price']; ?></td>
+                                                    <td><?php echo $fetch_product['quantity']; ?></td>
+                                                    <td><?php echo $fetch_product['create_time']; ?></td>
+                                                    <td><a
+                                                            href="detailproduct.php?product_id=<?php echo $fetch_product['product_id']; ?>">Xem chi tiết</a></td>
                                                     <td>
-                                                    <a href="productmanagement.php?delete=<?php echo $fetch_product['product_id'] ?> "
-                                                    onclick="return confirm('Bạn muốn xóa sản phẩm này?')">Xóa sản phẩm</a>
+                                                        <a href="productmanagement.php?delete=<?php echo $fetch_product['product_id']; ?>"
+                                                            onclick="return confirm('Bạn muốn xóa sản phẩm này?')">Xóa sản phẩm</a>
                                                     </td>
                                                 </tr>
-
                                                 <?php
-                                                $stt++;
+                                                $stt++; 
                                             }
+                                        } else {
+                                            echo "<tr><td colspan='7'>Không có sản phẩm.</td></tr>";
                                         }
                                         ?>
-
                                     </tbody>
                                 </table>
                             </div>

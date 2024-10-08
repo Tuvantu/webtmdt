@@ -52,8 +52,7 @@ if (isset($_GET['delete'])) {
 
 
     <!-- Custom fonts for this template -->
-    <link
-        rel="stylesheet">
+    <link rel="stylesheet">
 
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -131,11 +130,13 @@ if (isset($_GET['delete'])) {
 
                     <ul class="navbar-nav ml-auto">
 
-                    <!-- Thông tin tài khoản -->
+                        <!-- Thông tin tài khoản -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    <?php echo $_SESSION['admin_name'] ?>
+                                </span>
                                 <div class="sidebar-brand-icon">
                                     <i class="fas fa-circle-user"></i>
                                 </div>
@@ -186,7 +187,7 @@ if (isset($_GET['delete'])) {
                                     <tbody>
                                         <?php
                                         $select_account = mysqli_query($conn, "select * from users where role_id != 1") or die('query fail');
-
+                                        $stt = 1;
                                         if (mysqli_num_rows($select_account) > 0) {
                                             while ($fetch_account = mysqli_fetch_assoc($select_account)) {
                                                 $role_id = $fetch_account['role_id'];
@@ -197,7 +198,7 @@ if (isset($_GET['delete'])) {
 
                                                 <tr>
 
-                                                    <td><?php echo $fetch_account['user_id'] ?></td>
+                                                    <td><?php echo $stt ?></td>
                                                     <td><?php echo $fetch_account['user_name'] ?></td>
                                                     <td><?php echo $fetch_account['phone_number'] ?></td>
                                                     <td><?php echo $fetch_account['email'] ?></td>
@@ -210,10 +211,13 @@ if (isset($_GET['delete'])) {
                                                     </td>
                                                 </tr>
                                                 <?php
+                                                $stt++;
                                             }
+
                                         } else {
-                                            echo '<tr><td colspan="7" class="text-center" style="font-size: 25px;">Không có tài khoản nào được thêm!</td></tr>';
+                                            echo '<tr><td colspan="7" class="text-center" style="font-size: 25px;">Không có tài khoản nào!</td></tr>';
                                         }
+
                                         ?>
 
                                     </tbody>

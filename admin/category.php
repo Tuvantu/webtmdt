@@ -62,6 +62,10 @@ if (isset($_GET['delete'])) {
         .btn-createaccount:hover {
             background-color: #bcbcbd;
         }
+
+        .navbar {
+            margin-top: 0px;
+        }
     </style>
 
 </head>
@@ -70,13 +74,13 @@ if (isset($_GET['delete'])) {
 
     <div id="wrapper">
         <?php
-      include 'navigation.php';
+        include 'navigation.php';
         ?>
         <div id="content-wrapper" class="d-flex flex-column">
 
             <div id="content">
 
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand bg-white topbar mb-4 static-top shadow">
 
                     <ul class="navbar-nav ml-auto">
 
@@ -84,7 +88,9 @@ if (isset($_GET['delete'])) {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Nhân viên</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                    <?php echo $_SESSION['employee_name'] ?>
+                                </span>
                                 <div class="sidebar-brand-icon">
                                     <i class="fas fa-circle-user"></i>
                                 </div>
@@ -147,8 +153,8 @@ if (isset($_GET['delete'])) {
 
 
                                                     <td>
-                                                    <a href="updatecategory.php?category_id=<?php echo $fetch_category['category_id'] ?> "
-                                                            >Sửa</a>
+                                                        <a
+                                                            href="updatecategory.php?category_id=<?php echo $fetch_category['category_id'] ?> ">Sửa</a>
 
                                                         <a href="category.php?delete=<?php echo $fetch_category['category_id'] ?> "
                                                             onclick="return confirm('Bạn muốn xóa danh mục sản phẩm này?')">Xóa</a>

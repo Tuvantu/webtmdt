@@ -1,11 +1,41 @@
 <?php
 include './config.php';
+session_start();
+error_reporting(E_ALL & ~E_NOTICE);
 
 if (isset($_GET['id'])) {
 	$product_id = $_GET['id'];
 	$sql = "SELECT * FROM products WHERE product_id = $product_id";
 	$result = mysqli_query($conn, $sql);
 	$fetch_product = mysqli_fetch_assoc($result);
+}
+
+if (isset($_POST['add_cart'])) {
+		$product_id = $_GET['id'];
+		if (isset($_POST['abc_quantity'])) {
+			$quantity = $_POST['abc_quantity'];
+		} else {
+			$quantity = $_POST['quantity'] ?? 1;
+		}
+		$user_id = $_SESSION['user_id'];
+		$sql = "SELECT * FROM cart WHERE user_id = '$user_id' AND product_id = $product_id";
+		$result = mysqli_query($conn, $sql);
+		if (mysqli_num_rows($result) > 0) {
+			$fetch_cart = mysqli_fetch_assoc($result);
+			$quantity = $fetch_cart['quantity'] + $quantity;
+			$sql = "UPDATE cart SET quantity = $quantity WHERE user_id = '$user_id' AND product_id = $product_id";
+			mysqli_query($conn, $sql);
+			echo "<script type='text/javascript'>
+                window.alert('Sản phẩm đã có trong giỏ hàng và đã được cập nhật số lượng');
+                </script>";
+		} else {
+			$sql = "INSERT INTO cart (user_id, product_id, quantity) VALUES ('$user_id', $product_id, $quantity)";
+			mysqli_query($conn, $sql);
+			echo "<script type='text/javascript'>
+				window.alert('Thêm sản phẩm vào giỏ hàng thành công');
+				</script>";
+			header('Location: product.php?id=' . $product_id);
+		}
 }
 
 ?>
@@ -37,16 +67,15 @@ if (isset($_GET['id'])) {
 	<link rel="stylesheet" href="./icon/fontawesome-free-6.6.0-web/js/fontawesome.min.js">
 
 	<script>
-		$(document).ready(function () {
-			$("#Guibl").click(function () {
+		$(document).ready(function() {
+			$("#Guibl").click(function() {
 
-				$.post("../pages/thembinhluan.php",
-					{
+				$.post("../pages/thembinhluan.php", {
 						username: $("#username").val(),
 						noidung: $("#noidung").val(),
 						idsp: $("#idsp").val()
 					},
-					function (data, status) {
+					function(data, status) {
 						$("#dsbinhluan").append("<p> <?php echo $_SESSION['username']; ?>" + ":  " + $("#noidung").val() + "</p> ");
 						$("#noidung").val('');
 
@@ -73,7 +102,7 @@ if (isset($_GET['id'])) {
 							</div>
 						</div>
 					</div>
-					<div class="grid__column-right">
+					<form method="POST" class="grid__column-right">
 						<div class="product-detail-title">
 
 							<span class="product-detail-label">
@@ -118,42 +147,39 @@ if (isset($_GET['id'])) {
 
 						<div class="product-detail-quantity">
 							<div class="product-detail-label-lb" style="width: 110px;">Số lượng</div>
-
 							<?php
-							if ($fetch_product['quantity'] > 1) {
-								?>
+								if ($fetch_product['quantity'] > 1) {
+							?>
 
 								<div class="product-detail-quantity-action">
-									<input type="button" value="-" id="btn-sub" 
+									<input type="button" value="-" id="btn-sub"
 										class="product-detail-quantity-btn product-detail-quantity-btn-left">
-									<input max="<?php $fetch_product['quantity'] ?>" min="1" type="number" value="1" id="quantity-input" class="product-detail-quantity-input">
+									<input name="quantity" max="<?php echo $fetch_product['quantity'] ?>" min="1" type="number" value="1" id="quantity-input" class="product-detail-quantity-input">
 									<input type="button" value="+" id="btn-add"
 										class="product-detail-quantity-btn product-detail-quantity-btn-right">
 								</div>
 
-								<?php
-							} else {
-
-								?>
+							<?php
+								} else {
+							?>
 								<div class="product-detail-quantity-action">
-									<input type="text" disabled value="1" id="quantity-input" class="product-detail-quantity-input">
+									<input name="abc_quantity" type="number" disabled value="1" id="quantity-input" class="product-detail-quantity-input">
 								</div>
-								<?php
-							}
+							<?php
+								}
 							?>
 
 						</div>
 
 						<div class="product-detail-shopping">
-							<a href="../pages/addcart.php?item='.$row['id'].'">
-								<button class="product-detail-shopping-addtocart-btn" data-toggle="modal"
-									ata-target="#dialog1">
-									<i class="fas fa-cart-plus"></i>
+							<button class="product-detail-shopping-addtocart-btn" data-toggle="modal"
+								ata-target="#dialog1">
+								<i class="fas fa-cart-plus"></i>
+								<input style="padding: 10px 39px;" type="submit" name="add_cart">
 									Thêm vào giỏ hàng
-								</button>
-							</a>
+							</button>
 						</div>
-					</div>
+					</form>
 				</div>';
 
 				<?php
@@ -481,8 +507,13 @@ if (isset($_GET['id'])) {
 				var sub = document.getElementById('btn-sub');
 				var add = document.getElementById('btn-add');
 				var input = document.getElementById('quantity-input');
-				sub.addEventListener('click', function () { subValue(); });
-				add.addEventListener('click', function () { addValue(); });
+				sub.addEventListener('click', function() {
+					subValue();
+				});
+				add.addEventListener('click', function() {
+					addValue();
+				});
+
 				function subValue() {
 					if (input.value <= 1) {
 						return 1;
@@ -490,41 +521,42 @@ if (isset($_GET['id'])) {
 						--input.value;
 					}
 				}
+
 				function addValue() {
 					++input.value;
 				}
 			</script>
 			<script type="text/javascript">
-				$('document').ready(function () {
-					$('#select-1').mouseenter(function () {
+				$('document').ready(function() {
+					$('#select-1').mouseenter(function() {
 						$('#img-1').css('zIndex', '1');
 						$('#img-2').css('zIndex', '0');
 						$('#img-3').css('zIndex', '0');
 						$('#img-4').css('zIndex', '0');
 						$('#img-5').css('zIndex', '0');
 					});
-					$('#select-2').mouseenter(function () {
+					$('#select-2').mouseenter(function() {
 						$('#img-1').css('zIndex', '0');
 						$('#img-2').css('zIndex', '1');
 						$('#img-3').css('zIndex', '0');
 						$('#img-4').css('zIndex', '0');
 						$('#img-5').css('zIndex', '0');
 					});
-					$('#select-3').mouseenter(function () {
+					$('#select-3').mouseenter(function() {
 						$('#img-1').css('zIndex', '0');
 						$('#img-2').css('zIndex', '0');
 						$('#img-3').css('zIndex', '1');
 						$('#img-4').css('zIndex', '0');
 						$('#img-5').css('zIndex', '0');
 					});
-					$('#select-4').mouseenter(function () {
+					$('#select-4').mouseenter(function() {
 						$('#img-1').css('zIndex', '0');
 						$('#img-2').css('zIndex', '0');
 						$('#img-3').css('zIndex', '0');
 						$('#img-4').css('zIndex', '1');
 						$('#img-5').css('zIndex', '0');
 					});
-					$('#select-5').mouseenter(function () {
+					$('#select-5').mouseenter(function() {
 						$('#img-1').css('zIndex', '0');
 						$('#img-2').css('zIndex', '0');
 						$('#img-3').css('zIndex', '0');

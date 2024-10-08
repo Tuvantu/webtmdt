@@ -58,7 +58,7 @@ $user_id = @$_SESSION['user_id'];
             <li class="navbar-item"><a href="./pages/lienhe.php" class="navbar-link">LIÊN HỆ</a></li>
         </ul>
         <ul class="navbar-list">
-            <li class="navbar-item"><a href="./pages/giohang.php" class="navbar-link">GIỎ HÀNG</a></li>
+            <li class="navbar-item"><a href="./cart.php" class="navbar-link">GIỎ HÀNG</a></li>
             <li class="navbar-item"><a href="./pages/dangxuat.php" class="navbar-link">ĐƠN HÀNG</a></li>
             <li class="navbar-item upload"><a href="postnews.php" class="navbar-link">ĐĂNG TIN</a></li>
 

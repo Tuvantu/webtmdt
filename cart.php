@@ -1,4 +1,8 @@
-
+<?php
+	include './config.php';
+	session_start();
+	error_reporting(E_ALL & ~E_NOTICE);
+?>
 
 <html>
 <head>
@@ -29,77 +33,60 @@
 						<!-- BÊN DƯỚI LÀ sản phẩm -->
 						
 		<div class="footer">
-			<div class="grid wide">
-						<?php
-					$total=0;
-					$ok=1;
-					if(isset($_SESSION['cart']))
-					{
-							foreach($_SESSION['cart'] as $k => $v)
-						{
-							if(isset($k))
-							{
-							$ok=2;
-							}
-						}
-								}
-							if($ok == 2)
-					{
-							echo "<form action='../pages/giohang.php' method='post'>";
-							foreach($_SESSION['cart'] as $key=>$value)
-							{
-								$item[]=$key;
-							}
-							$str=implode(",",$item);
-							$conn = mysqli_connect("localhost", "root", "", "dacs2");
-							$sql ="SELECT * from sanpham where id in ($str)";
-							$query=mysqli_query($conn,$sql);
-							while($row=mysqli_fetch_array($query))
-						{
-							echo "<div>";
-							echo "<h5>$row[tensp]</h5>";
-							echo "Giá sản phẩm: ".number_format($row['giasp'],3)."đ<br />";
-							echo "<p align='right'>Số lượng: <input type='text'name='qty[$row[id]]' size='5' value='{$_SESSION['cart'][$row['id']]}'> - ";
-							echo "<a href='../pages/delcart.php?productid=$row[id]'>Xóa</a></p>";
-							echo "<p align='right'> Giá tiền cho món hàng: ".number_format($_SESSION['cart'][$row['id']]*$row['giasp'],3)." đ</p>";
-							echo "<hr></div>";
-							$total += $_SESSION['cart'][$row['id']]*$row['giasp'];    
-						}
-							echo "<div class='pro' align='right'>";
-							echo "<b>Tổng tiền cho các món hàng: <font color='red'>".number_format($total,3)." đ</font></b><hr>";
-							$_SESSION['total']= $total;     
-					?>
+		<div class="grid wide">
+			<?php
+			$total = 0;
+			$user_id = $_SESSION['user_id']; // Giả sử bạn đã lưu user_id trong session
 
-						<a href="../pages/thanhtoan.php" > <p> <input type="button" value="Thanh toán"></p></a>
-						
-							<?php
+			// Kiểm tra xem người dùng đã đăng nhập và có giỏ hàng không
+			if (isset($user_id)) {
+				// Lấy sản phẩm trong giỏ hàng từ cơ sở dữ liệu
+				$sql = "SELECT cart.product_id, cart.quantity, products.product_name, products.price 
+						FROM cart 
+						JOIN products ON cart.product_id = products.product_id 
+						WHERE cart.user_id = '$user_id'";
+				$query = mysqli_query($conn, $sql);
 
-							
-							echo "<input type='submit' align='left' name='submit' value='Cập nhật giỏ hàng'>";
-							echo "<div class='pro' align='center'>";
-							echo "<b><a href='../index.php'>Mua sắm tiếp</a> - <a href='../pages/delcart.php?productid=0'>Xóa bỏ giỏ hàng</a></b>";
-						
-					}
-					else
-					{
-							echo "<div class='pro'>";
-							echo "<p align='center'>Bạn không có món hàng nào trong giỏ hàng <br/><a href='../index.php'>Mua giày mới nào!</a></p>";
-							echo "</div>";
+				// Kiểm tra xem có sản phẩm nào trong giỏ hàng không
+				if (mysqli_num_rows($query) > 0) {
+					echo "<form action='../pages/giohang.php' method='post'>";
+
+					// Hiển thị sản phẩm trong giỏ hàng
+					while ($row = mysqli_fetch_array($query)) {
+						echo "<div>";
+						echo "<h5>{$row['product_name']}</h5>";
+						echo "Giá sản phẩm: " . number_format($row['price']) . "đ<br />";
+						echo "<p align='right'>Số lượng: <input type='number' name='qty[{$row['product_id']}]' size='5' value='{$row['quantity']}'> - ";
+						echo "<a href='../pages/delcart.php?productid={$row['product_id']}'>Xóa</a></p>";
+						echo "<p align='right'> Giá tiền cho món hàng: " . number_format($row['quantity'] * $row['price']) . " đ</p>";
+						echo "<hr></div>";
+						$total += $row['quantity'] * $row['price'];
 					}
 
-					?>
-   
-								</div>
-								</div>
-						<!-- BÊN trên LÀ sản phẩm -->
-								
-							</div>	
-						</div>
+					echo "<div class='pro' align='right'>";
+					echo "<b>Tổng tiền cho các món hàng: <font color='red'>" . number_format($total) . " đ</font></b><hr>";
+					$_SESSION['total'] = $total; // Bạn có thể cần tổng tiền trong session
 
-						
-					</div>					
-				</div>
-			</div>
+					echo "<a href='../pages/thanhtoan.php'> <p> <input type='button' value='Thanh toán'></p></a>";
+					echo "<input type='submit' align='left' name='submit' value='Cập nhật giỏ hàng'>";
+					echo "<div class='pro' align='center'>";
+					echo "<b><a href='../index.php'>Mua sắm tiếp</a> - <a href='../pages/delcart.php?productid=0'>Xóa bỏ giỏ hàng</a></b>";
+					echo "</div>";
+				} else {
+					// Nếu không có sản phẩm trong giỏ hàng
+					echo "<div class='pro'>";
+					echo "<p align='center'>Bạn không có món hàng nào trong giỏ hàng <br/><a href='../index.php'>Mua giày mới nào!</a></p>";
+					echo "</div>";
+				}
+			} else {
+				// Nếu người dùng chưa đăng nhập
+				echo "<div class='pro'>";
+				echo "<p align='center'>Bạn cần đăng nhập để xem giỏ hàng <br/><a href='../login.php'>Đăng nhập</a></p>";
+				echo "</div>";
+			}
+			?>
+		</div>
+
 		</div>
 
 		<div class="footer">

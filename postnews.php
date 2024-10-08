@@ -1,6 +1,7 @@
 <?php
 include './config.php';
 session_start();
+error_reporting(E_ALL & ~E_NOTICE);
 
 if (isset($_POST['submit'])) {
     $product_name = mysqli_real_escape_string($conn, $_POST['product_name']);

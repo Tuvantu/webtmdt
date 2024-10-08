@@ -212,6 +212,13 @@ session_start();
                     </div>
 
                     <!-- BÊN DƯỚI LÀ sản phẩm -->
+
+                    <?php
+
+                    $select_product = mysqli_query($conn, "select * from ")
+
+                    ?>
+
                     <div class="home-product">
                         <div class="row sm-gutter">
                         <div class="column l-2-4 me-4 s-6" >

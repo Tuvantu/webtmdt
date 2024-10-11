@@ -29,13 +29,13 @@ main .section-header {
 }
 
 main .section-header.green {
-    background-color: #28a745;
-    color: white;
+    background-color: #b9e06b;
+    color: black;
 }
 
 main .section-header.blue {
-    background-color: #007bff;
-    color: white;
+    background-color: #b9e06b;
+    color: black;
 }
 
 main .arrow-icon {
@@ -172,13 +172,12 @@ main .image-gallery img {
 
 /* Nút đăng */
 main .btn-submit {
-    width: 15%;
-    background-color: #007bff;
+    width: 150px;
+    background-color: #CCFF66;
     color: white;
     font-size: 16px;
     border: none;
-    border-radius: 30px;
-    padding: 10px 30px;
+    border-radius: 5px;
     cursor: pointer;
     text-align: center;
     display: block;
@@ -187,5 +186,5 @@ main .btn-submit {
 }
 
 main .btn-submit:hover {
-    background-color: #0056b3;
+    background-color: #339900;
 }

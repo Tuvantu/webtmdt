@@ -25,7 +25,7 @@ div button:focus {
 }
 
 .header {
-	background-color: #E4FDE1;
+	background-color: #F5F5F5;
 	height: 100px;
 }
 
@@ -40,7 +40,6 @@ div button:focus {
 	color: white;
 	position: absolute;
 	right: 10px;
-	top: 10px;
 }
 
 .nav__overplay {
@@ -162,7 +161,8 @@ div button:focus {
 	color: #333;
 	font-size: 16px;
 	position: relative;
-	top: 10px;
+	border: 1px solid #CCFF99;
+	border-radius: 5px;
 }
 
 .search .btn-search {
@@ -171,8 +171,7 @@ div button:focus {
 	border: none;
 	border-radius: 5px;
 	position: relative;
-	top: 10px;
-	background-color: #A7DCA5;
+	background-color: #CCFF66;
 }
 
 .account {
@@ -181,9 +180,9 @@ div button:focus {
 	align-items: center;
 	justify-content: center;
 	position: relative;
-	top: 10px;
 	text-align: center;
 	gap: 15px;
+	cursor: pointer;
 }
 
 .account .name_account {
@@ -198,7 +197,7 @@ div button:focus {
 }
 
 .navigation-bar {
-	background-color: #6BBF59;
+	background-color: #CCFF66;
 	margin: 0 auto;
 	display: flex;
 	justify-content: space-between;
@@ -218,14 +217,14 @@ div button:focus {
 
 
 .navbar-link {
-	color: white;
+	color: black;
 	padding: 6px 16px;
 	text-decoration: none;
 }
 
 .navbar-link.navbar-link:hover {
 	color: white;
-	background-color: #32CD32;
+	background-color: #99FF00;
 	text-decoration: none;
 	font-weight: bold;
 }
@@ -245,7 +244,7 @@ div button:focus {
 	top: 35px;
 	z-index: 1;
 	left: -1px;
-	background-color: #C7F9CC;
+	background-color: #CCFF99;
 	display: none;
 }
 
@@ -281,6 +280,7 @@ div button:focus {
 
 .slideshow {
 	z-index: 1;
+	border-bottom: 1px solid green;
 }
 
 
@@ -363,7 +363,7 @@ div button:focus {
 	background-color: rgba(0, 0, 0, 0.04);
 	display: flex;
 	align-items: center;
-	padding: 12px 22px;
+	padding: 0 10px;
 	border-radius: 2px;
 }
 
@@ -504,6 +504,7 @@ div button:focus {
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 2;
+	padding-left: 7px;
 }
 
 .home-product-item__price {
@@ -1210,4 +1211,16 @@ i.home-product-item__like-fill {
 	to {
 		opacity: 1;
 	}
+}
+
+
+
+
+/* SELECT LỌC THEO ... */
+.select_sort_by {
+	width: 200px;
+	height: 30px;
+	border-radius: 5px;
+	border: none;
+	margin-top: 20px;
 }

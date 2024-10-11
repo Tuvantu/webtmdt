@@ -1,0 +1,205 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main_content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.main_content .product_content {
+    width: 80%;
+    height: 400px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+}
+
+.product_content .product_photo {
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product_photo img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.product_content .product_info {
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+}
+
+.product_info {
+    display: flex;
+    flex-direction: column;
+}
+
+.product_info .product_name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.product_info .product_status {
+    font-size: 15px;
+}
+
+.product_info .product_price {
+    font-size: 25px;
+    font-weight: bold;
+    color: red;
+    margin: 5px 0;
+}
+
+.product_info .address i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.product_info .create_time i {
+    margin-right: 5px;
+    font-size: 15px;
+}
+
+.product_addtocart {
+    margin: 10px 0;
+}
+
+.product_addtocart .btn_addtocart {
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid red;
+    background-color: white;
+    color: red;
+    margin-right: 10px;
+}
+
+.product_addtocart .btn_buy {
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid limegreen;
+    background-color: limegreen;
+    color: white;
+    font-weight: bold;
+    
+}
+
+.shop_info {
+    width: 80%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shop_infodetail {
+    width: 100%;
+    padding: 10px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #bcbcbd;
+    border-radius: 10px;
+}
+
+.shop_infodetail .shop_avt {
+    width: 30%;
+    height: 100%;
+}
+
+.shop_avt img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.shop_infodetail .shop_content {
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop_content .shop_name {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* thông tin chi tiết của sản phẩm */
+.main_content .product_infomation {
+    width: 80%;
+    height: 400px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.product_infomation .other_infomation,
+.product_infomation .description {
+    width: 100%;
+}
+
+.other_infomation .title,
+.description .title {
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+    margin: 10px 0;
+}
+
+.description,
+.other_infomation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+/* BẢNG CÁC THÔNG TIN LIÊN QUAN */
+table {
+    width: 70%;
+    border-collapse: collapse;
+}
+
+table,
+th,
+td {
+    border: 1px solid rgb(204, 203, 203);
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+}
+
+tr .table_title {
+    width: 200px;
+    background-color: #f1f1f1;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

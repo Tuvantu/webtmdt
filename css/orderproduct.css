@@ -1,0 +1,289 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    background-color: white;
+}
+
+.container .container_content {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    padding: 10px;
+    background-color: white;
+    box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.1);
+}
+
+.container_content .ship_infomation {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+.ship_infomation .info_detail {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.info_detail .info_user {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.info_detail .info_address {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container_content label {
+    font-size: 13px;
+}
+
+.container_content input {
+    width: 280px;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid #bcbcbd;
+    padding-left: 10px;
+    font-size: 12px;
+}
+
+.info_row {
+    display: flex;
+    flex-direction: column;
+}
+
+.container_content .title {
+    font-size: 15px;
+    color: black;
+    font-weight: bold;
+}
+
+.info_user {
+    gap: 10px;
+}
+
+.info_address {
+    gap: 10px;
+}
+
+.container_content .payment {
+    width: 40%;
+}
+
+.ship_infomation .button {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px;
+    padding: 0 125px;
+}
+
+.button button {
+    width: 120px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: limegreen;
+}
+
+.payment .payment_content {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.payment_content .method_payment {
+    width: 85%;
+    height: 60px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    display: flex;
+    align-items: center;
+    /* Căn giữa các phần tử dọc */
+    background-color: rgb(250, 248, 248);
+    margin-bottom: 10px;
+    transition: background-color 0.3s;
+    justify-content: space-around;
+}
+
+.method_payment:hover {
+    background-color: rgba(230, 230, 250, 0.5);
+}
+
+.method_payment input[type="radio"] {
+    width: 10%;
+    margin-right: 10px;
+    font-size: 5px;
+}
+
+.method_payment .method_avt {
+    width: 15%;
+    height: 100%;
+    font-size: 24px;
+    color: limegreen;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.method_payment .method_name {
+    width: 75%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: gray;
+}
+
+
+/* THÔNG TIN ĐƠN HÀNG */
+.info_order {
+    width: 85%;
+}
+.info_order .provisional {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info_order .ship {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ship_title,
+.provisional_title {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    color: gray;
+}
+
+.ship_price,
+.provisional_price {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.total_order {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.total_title {
+    width: 50%;
+    font-size: 18px;
+    color: black;
+    display: flex;
+    align-items: center;
+}
+
+.total_price {
+    width: 50%;
+    font-size: 20px;
+    color: red;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.button_payment {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.button_payment button {
+    width: 100%;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    background-color: orange;
+    color: white;
+}
+
+
+/* chi tiết sản phẩm mua */
+
+.product {
+    margin-top: 30px;
+}
+.product_detail {
+    width: 93%;
+    height: 80px;
+    border-radius: 5px;
+    display: flex;
+    box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.1);
+}
+
+.product_detail .product_photo {
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product_photo img {
+    width: 95%;
+    height: 95%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.product_detail .product_name {
+    width: 40%;
+}
+
+.product_name {
+    font-size: 15px;
+    padding-left: 10px;
+    color: gray;
+    display: flex;
+    align-items: center;
+}
+
+.product_detail .product_price {
+    width: 25%;
+}
+
+.product_price {
+    font-size: 16px;
+    color: orange;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product_detail .product_quantity {
+    width: 25%;
+}
+
+.product_quantity {
+    font-size: 15px;
+    color: gray;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 10px;
+}

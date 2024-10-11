@@ -1,0 +1,139 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    flex-direction: column;
+}
+
+.container .info_shop {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+    box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.info_shop .shop_avt {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shop_avt img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.info_shop .shop_name {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop_name .name {
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+}
+
+.info_shop .shop_description {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+.shop_description .number {
+    color: red;
+    font-weight: bold;
+}
+
+
+/* sản phẩm */
+
+.container .product {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    flex-wrap: wrap;
+    box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.1);
+    background-color: #f7f5f5;
+}
+
+.product .product_item {
+    width: 210px;
+    height: 325px;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 5px;
+    position: relative;
+    background-color: white;
+}
+
+
+
+
+.product_item .product_photo {
+    width: 100%;
+    height: 70%;
+}
+
+.product_photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.product_item .product_name {
+    font-size: 16px;
+    color: #333;
+    font-weight: 300;
+    margin: 10px 5px 5px 5px;
+    line-height: 18px;
+    height: 36px;
+    overflow: hidden;
+    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.product_item .product_price {
+    color: #FFD400;
+    font-size: 18px;
+    margin-left: 5px;
+    position: absolute;
+    bottom: 20px;
+    font-weight: bold;
+}
+
+.product_item .product_time {
+    position: absolute;
+    bottom: 0;
+    font-size: 13px;
+    left: 10px;
+    color: gray;
+}
+
+
+.product_item:hover {
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	transform: translateY(-1px);
+	text-decoration: none;
+} 

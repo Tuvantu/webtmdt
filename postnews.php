@@ -76,7 +76,6 @@ if (isset($_POST['submit'])) {
             <div class="section">
                 <div class="section-header green">
                     <span>Chọn chuyên mục đăng tin</span>
-                    <i class="arrow-icon">▼</i>
                 </div>
 
 
@@ -101,7 +100,6 @@ if (isset($_POST['submit'])) {
             <div class="section">
                 <div class="section-header blue">
                     <span>Nội dung tin đăng</span>
-                    <i class="arrow-icon">▼</i>
                 </div>
                 <div class="section-content">
                     <!-- Tiêu đề -->
@@ -166,7 +164,6 @@ if (isset($_POST['submit'])) {
             <div class="section">
                 <div class="section-header blue">
                     <span>Thông tin cơ bản</span>
-                    <i class="arrow-icon">▼</i>
                 </div>
                 <div class="section-content">
                     <label for="time_used">Bạn đã sử dụng sản phẩm này bao lâu?</label>

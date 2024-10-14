@@ -2,9 +2,8 @@
 include './config.php';
 session_start();
 $user_id = @$_SESSION['user_id'];
-
 ?>
-<form aaction="index.php" method="POST">
+<form action="index.php" method="POST">
     <div class="app">
         <div class="header">
             <div class="grid wide">
@@ -16,32 +15,28 @@ $user_id = @$_SESSION['user_id'];
                     <div class="search">
                         <input type="text" name="s" class="search-bar" placeholder="Tìm kiếm">
                         <input type="submit" value="Tìm kiếm" class="btn-search">
-
                     </div>
 
-                    <!-- <div class="login_account" style="text-decoration: none;">
-                        <a href="./login/login.php">ĐĂNG NHẬP</a>
-                    </div> -->
-
                     <div class="account" style="position: relative; top: 0px; gap: 13px" onclick="toggleDropdown()">
-                        <?php 
-                            if(isset($user_id)) {
-                                ?>
+                        <?php
+                        if (isset($user_id)) {
+                            ?>
                             <p class="name_account">
                                 <?php echo $_SESSION['user_name']; ?>
                             </p>
                             <i class="fa-solid fa-circle-user" style="color: #8bea96;"></i>
                             <div id="dropdown" class="dropdown-content" style="display: none;">
-                                <button type="button" class="btn_profile">Hồ sơ cá nhân</button>
+                                <a href="myprofile.php?user_id=<?php echo $user_id ?>">Hồ sơ cá nhân</a>
                                 <a href="change_password.php?user_id=<?php echo $user_id ?>">Đổi mật khẩu</a>
                                 <button type="button" onclick="showModal()" class="btn_logout">Đăng xuất</button>
                             </div>
-                        <?php 
+                            <?php
                         } else {
-                        ?>
-                            <a href="./login/login.php">Đăng nhập</a>
-                            <a href="./login/signin.php">Đăng ký</a>
-                        <?php
+                            ?>
+                            <a href="./login/login.php" class="login">Đăng nhập</a>
+                            <span class="space">/</span>
+                            <a href="./login/signin.php" class="signin">Đăng ký</a>
+                            <?php
                         }
                         ?>
                     </div>
@@ -50,7 +45,6 @@ $user_id = @$_SESSION['user_id'];
             </div>
         </div>
 </form>
-
 
 <div class="navigation-bar">
     <ul class="navbar-list">
@@ -68,46 +62,44 @@ $user_id = @$_SESSION['user_id'];
                             <li class="navbar-category-item">
                                 <?php echo $fetch_category['category_name'] ?>
                             </li>
-
                             <?php
                         }
                     }
                     ?>
                 </ul>
-
             </div>
         </li>
         <li class="navbar-item"><a href="./pages/lienhe.php" class="navbar-link">LIÊN HỆ</a></li>
     </ul>
     <ul class="navbar-list">
-    <li class="navbar-item">
-        <?php if ($user_id): ?>
-            <a href="./cart.php" class="navbar-link">GIỎ HÀNG</a>
-        <?php else: ?>
-            <a href="./login.php" class="navbar-link">ĐĂNG NHẬP ĐỂ XEM GIỎ HÀNG</a>
-        <?php endif; ?>
-    </li>
-    <li class="navbar-item">
-        <?php if ($user_id): ?>
-            <a href="./pages/donhang.php" class="navbar-link">ĐƠN HÀNG</a>
-        <?php else: ?>
-            <a href="./login.php" class="navbar-link">ĐĂNG NHẬP ĐỂ XEM ĐƠN HÀNG</a>
-        <?php endif; ?>
-    </li>
-    <li class="navbar-item">
-        <?php if ($user_id): ?>
-            <a href="./myshop.php" class="navbar-link">CỬA HÀNG</a>
-        <?php else: ?>
-            <a href="./login.php" class="navbar-link">ĐĂNG NHẬP ĐỂ XEM CỬA HÀNG</a>
-        <?php endif; ?>
-    </li>
-    <li class="navbar-item upload">
-        <?php if ($user_id): ?>
-            <a href="./postnews.php" class="navbar-link">ĐĂNG TIN</a>
-        <?php else: ?>
-            <a href="./login.php" class="navbar-link">ĐĂNG NHẬP ĐỂ ĐĂNG TIN</a>
-        <?php endif; ?>
-
+        <li class="navbar-item">
+            <?php if ($user_id): ?>
+                <a href="./cart.php" class="navbar-link">GIỎ HÀNG</a>
+            <?php else: ?>
+                <a href="./login/login.php" class="navbar-link">GIỎ HÀNG</a>
+            <?php endif; ?>
+        </li>
+        <li class="navbar-item navbar-item-order">
+            <a href="#" class="navbar-link" onclick="toggleOrderDropdown()">ĐƠN HÀNG</a>
+            <div id="orderDropdown" class="dropdown-content" style="display: none; margin-top: 35px">
+                <a href="./pages/donmuahang.php">Đơn mua</a>
+                <a href="./pages/donbanhang.php">Đơn bán</a>
+            </div>
+        </li>
+        <li class="navbar-item">
+            <?php if ($user_id): ?>
+                <a href="./myshop.php" class="navbar-link">CỬA HÀNG</a>
+            <?php else: ?>
+                <a href="./login/login.php" class="navbar-link">CỬA HÀNG</a>
+            <?php endif; ?>
+        </li>
+        <li class="navbar-item upload">
+            <?php if ($user_id): ?>
+                <a href="./postnews.php" class="navbar-link">ĐĂNG TIN</a>
+            <?php else: ?>
+                <a href="./login/login.php" class="navbar-link">ĐĂNG TIN</a>
+            <?php endif; ?>
+        </li>
     </ul>
 </div>
 
@@ -117,7 +109,7 @@ $user_id = @$_SESSION['user_id'];
         <p style="font-size: 16px">Bạn có chắc chắn muốn đăng xuất?</p>
         <div class="modal_btn">
             <button type="button" class="btn_cancel" onclick="closeModal()">Hủy</button>
-            <a href="logout.php" class="btn_ok" >OK</a>
+            <a href="logout.php" class="btn_ok">OK</a>
         </div>
     </div>
 </div>
@@ -127,6 +119,12 @@ $user_id = @$_SESSION['user_id'];
         position: relative;
     }
 
+    .account a,
+    .account .space {
+        text-decoration: none;
+        color: green;
+    }
+
     .dropdown-content {
         display: none;
         position: absolute;
@@ -134,7 +132,7 @@ $user_id = @$_SESSION['user_id'];
         min-width: 160px;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         z-index: 1;
-        margin-top: 150px;
+        margin-top: 185px;
     }
 
     .dropdown-content a {
@@ -170,7 +168,7 @@ $user_id = @$_SESSION['user_id'];
         height: 50px;
         border-radius: 5px;
         border: none;
-        background-color: white
+        background-color: white;
     }
 
     .modal-content {
@@ -224,20 +222,19 @@ $user_id = @$_SESSION['user_id'];
     }
 </style>
 
-
 <script>
-    function toggleDropdown() {        
+    function toggleDropdown() {
         var dropdown = document.getElementById("dropdown");
-        if (dropdown.style.display === "none" || dropdown.style.display === "") {
-            dropdown.style.display = "block";
-        } else {
-            dropdown.style.display = "none";
-        }
+        dropdown.style.display = (dropdown.style.display === "none" || dropdown.style.display === "") ? "block" : "none";
     }
 
-    // Để đóng dropdown khi nhấn ra ngoài
+    function toggleOrderDropdown() {
+        var orderDropdown = document.getElementById("orderDropdown");
+        orderDropdown.style.display = (orderDropdown.style.display === "none" || orderDropdown.style.display === "") ? "block" : "none";
+    }
+
     window.onclick = function (event) {
-        if (!event.target.matches('.name_account') && !event.target.matches('.fa-circle-user')) {
+        if (!event.target.matches('.name_account') && !event.target.matches('.fa-circle-user') && !event.target.matches('.navbar-item-order a')) {
             var dropdowns = document.getElementsByClassName("dropdown-content");
             for (var i = 0; i < dropdowns.length; i++) {
                 var openDropdown = dropdowns[i];

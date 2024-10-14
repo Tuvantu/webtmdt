@@ -149,7 +149,7 @@ div button:focus {
 .search {
 	display: flex;
     align-items: center;
-    width: 70%;
+    width: 60%;
 	gap: 10px;
 }
 
@@ -175,7 +175,7 @@ div button:focus {
 }
 
 .account {
-	width: 10%;
+	width: 20%;
 	display: flex;
 	align-items: center;
 	justify-content: center;

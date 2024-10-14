@@ -73,7 +73,5 @@
             </div>
         </div>
     </div>
-    <div class="scroll-to-top" onclick="scrollToTop();">
-        <i class="scroll-to-top-icon fas fa-chevron-up"></i>
-    </div>
+   
     </div>

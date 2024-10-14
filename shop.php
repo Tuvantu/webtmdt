@@ -272,9 +272,7 @@ error_reporting(E_ALL & ~E_NOTICE);
     </div>
 
     <?php include 'footer.php' ?>
-    <div class="scroll-to-top" onclick="scrollToTop();">
-        <i class="scroll-to-top-icon fas fa-chevron-up"></i>
-    </div>
+   
 </body>
 <script>
 document.getElementById('suggestions-link').addEventListener('click', function(event) {

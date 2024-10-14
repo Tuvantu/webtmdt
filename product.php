@@ -77,7 +77,7 @@ if (isset($_POST['add_cart'])) {
 
 	<?php include 'header.php' ?>
 
-	<div class="main_content">
+	<form method="POST" class="main_content">
 		<div class="product_content">
 			<div class="product_photo">
 				<img src="./upload_image/<?php echo $fetch_product['product_image']; ?>" alt="">
@@ -140,11 +140,9 @@ if (isset($_POST['add_cart'])) {
 				</div>
 
 				<div class="product_addtocart">
-					<button class="btn_addtocart" type="submit" name="add_cart" data-toggle="modal"
-						ata-target="#dialog1">
+					<input class="btn_addtocart" type="submit" name="add_cart" data-toggle="modal" value="Thêm vào giỏ hàng">
 						<i class="fas fa-cart-plus"></i>
-						Thêm vào giỏ hàng
-					</button>
+						
 
 
 					<button class="btn_buy" type="submit" name="btn_buy">
@@ -228,7 +226,7 @@ if (isset($_POST['add_cart'])) {
 
 		</div>
 
-	</div>
+	</form>
 
 
 

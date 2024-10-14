@@ -5,6 +5,30 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 $user_id = $_SESSION['user_id'];
 $user_name = $_SESSION['user_name'];
+
+$select_user = mysqli_query($conn, "select * from users where user_id = $user_id");
+$fetch_user = mysqli_fetch_assoc($select_user);
+
+
+if (isset($_POST['submit'])) {
+    $user_name = $_POST['user_name'];
+    $email = $_POST['email'];
+    $address = $_POST['address'];
+    $code = $_POST['code'];
+    $sex = $_POST['sex'];
+    $birthday = $_POST['birthday'];
+
+    mysqli_query($conn, "UPDATE users SET user_name = '$user_name', email = '$email',  address = '$address',
+    code = '$code', sex = '$sex', birthday = '$birthday' WHERE user_id = '$user_id'");
+
+    $message = 'Cập nhật thông tin hồ sơ cá nhân thành công!';
+    echo "<script type='text/javascript'>
+    window.alert('$message');
+    window.location.href = 'myprofile.php?user_id=$user_id'; 
+    </script>";
+
+}
+
 ?>
 <html>
 
@@ -29,13 +53,19 @@ $user_name = $_SESSION['user_name'];
     <link rel="stylesheet" href="./icon/fontawesome-free-6.6.0-web/js/all.min.js">
     <link rel="stylesheet" href="./icon/fontawesome-free-6.6.0-web/js/brands.min.js">
     <link rel="stylesheet" href="./icon/fontawesome-free-6.6.0-web/js/fontawesome.min.js">
+
+    <style>
+        input {
+            padding: 5px;
+        }
+    </style>
 </head>
 
 <body>
 
     <?php include 'header.php' ?>
 
-    <div class="container">
+    <form method="POST" class="container">
         <div class="myprofile">
             <div class="title">
                 <span>Hồ sơ cá nhân</span>
@@ -44,19 +74,19 @@ $user_name = $_SESSION['user_name'];
             <div class="profile_detail">
                 <div class="row">
                     <label for="">Họ và tên</label>
-                    <input type="text">
+                    <input name="user_name" type="text" value="<?php echo $fetch_user['user_name'] ?>">
                 </div>
                 <div class="row">
                     <label for="">Số điện thoại</label>
-                    <input type="text">
+                    <input type="text" value="<?php echo $fetch_user['phone_number'] ?>" disabled>
                 </div>
                 <div class="row">
                     <label for="">Email</label>
-                    <input type="text">
+                    <input name="email" type="email" value="<?php echo $fetch_user['email'] ?>">
                 </div>
                 <div class="row">
                     <label for="">Địa chỉ</label>
-                    <input type="text">
+                    <input name="address" type="text" value="<?php echo $fetch_user['address'] ?>">
                 </div>
             </div>
         </div>
@@ -72,24 +102,24 @@ $user_name = $_SESSION['user_name'];
             <div class="profile_detail">
                 <div class="row">
                     <label for="">CCCD / Định danh</label>
-                    <input type="text">
+                    <input name="code" type="text" value="<?php echo $fetch_user['code'] ?>">
                 </div>
                 <div class="row">
                     <label for="">Giới tính</label>
-                    <input type="text">
+                    <input name="sex" type="text" value="<?php echo $fetch_user['sex'] ?>">
                 </div>
                 <div class="row">
                     <label for="">Ngày, tháng, năm sinh</label>
-                    <input type="text">
+                    <input name="birthday" type="date" value="<?php echo $fetch_user['birthday'] ?>">
                 </div>
             </div>
 
 
         </div>
         <div class="button">
-            <button type="button">Chỉnh sửa hồ sơ</button>
+            <input name="submit" type="submit" value="Chỉnh sửa hồ sơ">
         </div>
-    </div>
+    </form>
 
 
 

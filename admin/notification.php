@@ -1,6 +1,25 @@
 <?php
 include '../config.php';
 session_start();
+
+if(isset($_POST['add_notification'])) {
+    $title = $_POST['title'];
+    $content = $_POST['content'];
+    $create_time = date('Y-m-d H:i:s');
+    $user_id = $_SESSION['employee_id'];
+
+    mysqli_query($conn, "insert into notifications (title, content, create_time, user_id) values ('$title', 
+    '$content', '$create_time', '$user_id')");
+
+    $message = 'Gửi thông báo thành công!';
+    echo "<script type='text/javascript'>
+            window.alert('$message');
+            window.location.href = 'notification.php'; // Chuyển hướng về trang thông báo
+          </script>";
+
+    
+}
+
 ?>
 
 
@@ -94,22 +113,15 @@ session_start();
                         <div class="container mt-1">
                             <form method="post">
                                 <div class="form-group">
-                                    <label>Người nhận</label>
-                                    <select type="select" class="form-control" name="notification_name" required>
-                                        <option value="">Tất cả</option>
-                                        <option value="">Nguyễn Văn A</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
                                     <label>Tiêu đề thông báo</label>
-                                    <input type="text" class="form-control" name="notification_name" required>
+                                    <input type="text" class="form-control" name="title" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Nội dung thông báo</label>
-                                    <input type="text" class="form-control" name="message" required>
+                                    <input type="text" class="form-control" name="content" required>
                                 </div>
 
-                                <input name="add_account" type="submit" class="btn btn-primary" value="Gửi thông báo">
+                                <input name="add_notification" type="submit" class="btn btn-primary" value="Gửi thông báo">
                             </form>
                         </div>
 

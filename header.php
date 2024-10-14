@@ -2,6 +2,18 @@
 include './config.php';
 session_start();
 $user_id = @$_SESSION['user_id'];
+
+$sql = "SELECT * FROM notifications ORDER BY create_time DESC";
+$result = $conn->query($sql);
+
+$notifications = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $notifications[] = $row;
+    }
+}
+
+
 ?>
 <form action="index.php" method="POST">
     <div class="app">
@@ -15,6 +27,25 @@ $user_id = @$_SESSION['user_id'];
                     <div class="search">
                         <input type="text" name="s" class="search-bar" placeholder="Tìm kiếm">
                         <input type="submit" value="Tìm kiếm" class="btn-search">
+                    </div>
+
+                    <div class="notification" style="width: 5%; position: relative;">
+                        <div class="notification_icon" id="notificationIcon"
+                            style="display: flex; justify-content: center; width: 30px; height: 25px; border-bottom: 1px solid gray; font-size: 20px; color: greenyellow; cursor: pointer;">
+                            <i class="fa-solid fa-bell"></i>
+                        </div>
+
+                        <div class="notification_list" id="notificationList"
+                            style="display: none; position: absolute; top: 30px; right: 0; width: 300px; border: 1px solid #ccc; border-radius: 5px; background-color: white; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); z-index: 1000;">
+                            <ul id="notifications" style="list-style-type: none; padding: 0; margin: 0;">
+                                <?php foreach ($notifications as $notify): ?>
+                                    <li class="notification-item">
+                                        <h4 class="notification-title"><?php echo $notify['title']; ?></h4>
+                                        <p class="notification-content"><?php echo $notify['content']; ?></p>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
                     </div>
 
                     <div class="account" style="position: relative; top: 0px; gap: 13px" onclick="toggleDropdown()">
@@ -220,6 +251,61 @@ $user_id = @$_SESSION['user_id'];
         text-decoration: none;
         cursor: pointer;
     }
+
+    .notification_list ul li {
+        padding: 10px;
+        border-bottom: 1px solid #f1f1f1;
+    }
+
+    .notification_list ul li:hover {
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+
+    .notification_list ul li:last-child {
+        border-bottom: none;
+    }
+
+    #notifications {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 0;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+    }
+
+    /* Kiểu dáng cho từng mục thông báo */
+    .notification-item {
+        padding: 15px;
+        border-bottom: 1px solid #e0e0e0;
+        transition: background-color 0.2s;
+    }
+
+    .notification-item:last-child {
+        border-bottom: none; /* Bỏ viền cho phần tử cuối cùng */
+    }
+
+    /* Tiêu đề của thông báo */
+    .notification-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0 0 5px 0;
+        color: #333;
+    }
+
+    /* Nội dung của thông báo */
+    .notification-content {
+        font-size: 16px;
+        margin: 0;
+        color: #666;
+        line-height: 1.5;
+    }
+
+    /* Hiệu ứng khi di chuột vào thông báo */
+    .notification-item:hover {
+        background-color: #f5f5f5;
+    }
 </style>
 
 <script>
@@ -251,6 +337,32 @@ $user_id = @$_SESSION['user_id'];
 
     function closeModal() {
         document.getElementById("logoutModal").style.display = "none";
+    }
+
+    document.getElementById('notificationIcon').addEventListener('click', function () {
+        const notificationList = document.getElementById('notificationList');
+        notificationList.style.display = notificationList.style.display === 'none' ? 'block' : 'none';
+        loadNotifications(); // Tải thông báo khi mở danh sách
+    });
+
+    function loadNotifications() {
+        fetch('?fetch_notifications=true')
+            .then(response => response.json())
+            .then(data => {
+                const notificationsElement = document.getElementById('notifications');
+                notificationsElement.innerHTML = ''; // Xóa thông báo cũ
+
+                if (data.length === 0) {
+                    notificationsElement.innerHTML = '<li>Không có thông báo nào.</li>';
+                } else {
+                    data.forEach(notification => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<strong>${notification.title}</strong><p>${notification.content}</p><small>${notification.create_time}</small>`;
+                        notificationsElement.appendChild(li);
+                    });
+                }
+            })
+            .catch(error => console.error('Error loading notifications:', error));
     }
 
 </script>

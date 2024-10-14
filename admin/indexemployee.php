@@ -145,7 +145,7 @@ session_start();
 
                         <?php
 
-                        $select_productapp = mysqli_query($conn, "select * from productapproval") or die('query fail');
+                        $select_productapp = mysqli_query($conn, "select * from products where status = 0") or die('query fail');
                         $total_productapp = mysqli_num_rows($select_productapp);
 
                         ?>

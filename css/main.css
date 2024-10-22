@@ -161,7 +161,7 @@ div button:focus {
 	color: #333;
 	font-size: 16px;
 	position: relative;
-	border: 1px solid #CCFF99;
+	border: 1px solid #BACD8B;
 	border-radius: 5px;
 }
 
@@ -171,7 +171,7 @@ div button:focus {
 	border: none;
 	border-radius: 5px;
 	position: relative;
-	background-color: #CCFF66;
+	background-color: #BACD8B;
 }
 
 .account {
@@ -197,7 +197,7 @@ div button:focus {
 }
 
 .navigation-bar {
-	background-color: #CCFF66;
+	background-color: #BACD8B;
 	margin: 0 auto;
 	display: flex;
 	justify-content: space-between;
@@ -207,7 +207,7 @@ div button:focus {
 .navbar-list {
 	list-style: none; 
 	padding-left: 0;
-	margin: 0 100px;
+	margin: 0 90px;
 }
 
 .navbar-item,
@@ -217,14 +217,14 @@ div button:focus {
 
 
 .navbar-link {
-	color: black;
+	color: BLACK;
 	padding: 6px 16px;
 	text-decoration: none;
 }
 
 .navbar-link.navbar-link:hover {
 	color: white;
-	background-color: #99FF00;
+	background-color: #b5d85d;
 	text-decoration: none;
 	font-weight: bold;
 }

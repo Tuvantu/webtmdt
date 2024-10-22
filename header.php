@@ -1,6 +1,7 @@
 <?php
 include './config.php';
 session_start();
+error_reporting(E_ALL & ~E_NOTICE);
 $user_id = @$_SESSION['user_id'];
 
 $sql = "SELECT * FROM notifications ORDER BY create_time DESC";
@@ -16,7 +17,6 @@ if ($result->num_rows > 0) {
 
 ?>
 <form action="index.php" method="POST">
-    <div class="app">
         <div class="header">
             <div class="grid wide">
                 <div class="header-main">
@@ -31,7 +31,7 @@ if ($result->num_rows > 0) {
 
                     <div class="notification" style="width: 5%; position: relative;">
                         <div class="notification_icon" id="notificationIcon"
-                            style="display: flex; justify-content: center; width: 30px; height: 25px; border-bottom: 1px solid gray; font-size: 20px; color: greenyellow; cursor: pointer;">
+                            style="display: flex; justify-content: center; width: 30px; height: 25px; border-bottom: 1px solid gray; font-size: 20px; color: #BACD8B; cursor: pointer;">
                             <i class="fa-solid fa-bell"></i>
                         </div>
 
@@ -113,8 +113,8 @@ if ($result->num_rows > 0) {
         <li class="navbar-item navbar-item-order">
             <a href="#" class="navbar-link" onclick="toggleOrderDropdown()">ĐƠN HÀNG</a>
             <div id="orderDropdown" class="dropdown-content" style="display: none; margin-top: 35px">
-                <a href="./pages/donmuahang.php">Đơn mua</a>
-                <a href="./pages/donbanhang.php">Đơn bán</a>
+                <a href="./order_purchase.php">Đơn mua</a>
+                <a href="./sales_order.php">Đơn bán</a>
             </div>
         </li>
         <li class="navbar-item">

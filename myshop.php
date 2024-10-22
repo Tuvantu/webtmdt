@@ -29,6 +29,27 @@ $user_name = $_SESSION['user_name'];
     <link rel="stylesheet" href="./icon/fontawesome-free-6.6.0-web/js/all.min.js">
     <link rel="stylesheet" href="./icon/fontawesome-free-6.6.0-web/js/brands.min.js">
     <link rel="stylesheet" href="./icon/fontawesome-free-6.6.0-web/js/fontawesome.min.js">
+
+    <style>
+        .alert {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .alert img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .alert p {
+            font-size: 18px;
+            color: yellowgreen;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -36,6 +57,7 @@ $user_name = $_SESSION['user_name'];
     <?php include 'header.php' ?>
 
     <div class="container">
+
         <div class="info_shop">
             <div class="shop_avt">
                 <img src="./img/avt.jfif" alt="">
@@ -43,22 +65,22 @@ $user_name = $_SESSION['user_name'];
 
             <div class="shop_name">
                 <span class="name">
-                    <?php echo $user_name  ?>
+                    <?php echo $user_name ?>
                 </span>
                 <?php
-                    $select_user = mysqli_query($conn, "select * from users where user_id = $user_id");
-                    $fetch_user = mysqli_fetch_assoc($select_user);
+                $select_user = mysqli_query($conn, "select * from users where user_id = $user_id");
+                $fetch_user = mysqli_fetch_assoc($select_user);
                 ?>
                 <span> <i class="fa-solid fa-phone-volume" style="color: gray;"></i> <span class="phone_number">Số điện
                         thoại: </span><?php echo $fetch_user['phone_number'] ?></span>
                 <span><i class="fa-solid fa-location-dot" style="color: gray;"></i> <span>Địa chỉ: </span>
-                <?php echo $fetch_user['address'] ?></span>
+                    <?php echo $fetch_user['address'] ?></span>
             </div>
 
             <div class="shop_description">
                 <?php
-                    $select_product = mysqli_query($conn, "select * from products where user_id = $user_id");
-                    $total_product = mysqli_num_rows($select_product);
+                $select_product = mysqli_query($conn, "select * from products where user_id = $user_id");
+                $total_product = mysqli_num_rows($select_product);
                 ?>
 
                 <span><i class="fa-solid fa-basket-shopping" style="color: gray;"></i> <span>Sản phẩm:
@@ -81,7 +103,6 @@ $user_name = $_SESSION['user_name'];
             if (mysqli_num_rows($select_all_product) > 0) {
                 while ($product = mysqli_fetch_assoc($select_all_product)) {
                     ?>
-
                     <div class="product_item">
                         <a href="detailmyproduct.php?id=<?php echo $product['product_id']; ?>">
                             <div class="product_photo">
@@ -107,7 +128,11 @@ $user_name = $_SESSION['user_name'];
                     <?php
                 }
             } else {
-                echo "<p>Không có sản phẩm nào được phê duyệt!</p>";
+                echo '
+                    <div class="alert">
+                         <img src="./img/shop.png" alt="Ảnh giỏ hàng">
+                        <p>Bạn chưa bán sản phẩm nào.</p>
+                    </div>';
             }
             ?>
         </div>
